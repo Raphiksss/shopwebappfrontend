@@ -1,6 +1,6 @@
 .cards {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 16px;
     padding: 8px;
     max-width: 100%;
@@ -102,7 +102,7 @@
 }
 
 .buttonContainer button:hover {
-    background-color: #67b8dd; /* Слегка темнее базового цвета */
+    background-color: #67b8dd; /* РЎР»РµРіРєР° С‚РµРјРЅРµРµ Р±Р°Р·РѕРІРѕРіРѕ С†РІРµС‚Р° */
 }
 
 .buttonContainer button:active {
@@ -122,23 +122,23 @@
     display: block;
 }
 
-/* Медиа-запросы удалены, чтобы всегда было две карточки в строке */
+/* РњРµРґРёР°-Р·Р°РїСЂРѕСЃС‹ СѓРґР°Р»РµРЅС‹, С‡С‚РѕР±С‹ РІСЃРµРіРґР° Р±С‹Р»Рѕ РґРІРµ РєР°СЂС‚РѕС‡РєРё РІ СЃС‚СЂРѕРєРµ */
 
 .skeleton {
     border-radius: 12px;
     overflow: hidden;
 }
 
-/* Для очень маленьких экранов можно сделать одну колонку */
+/* Р”Р»СЏ РѕС‡РµРЅСЊ РјР°Р»РµРЅСЊРєРёС… СЌРєСЂР°РЅРѕРІ РјРѕР¶РЅРѕ СЃРґРµР»Р°С‚СЊ РѕРґРЅСѓ РєРѕР»РѕРЅРєСѓ */
 @media (max-width: 400px) {
     .cards {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
 }
 
-/* Для очень маленьких экранов можно сделать одну колонку */
+/* Р”Р»СЏ РѕС‡РµРЅСЊ РјР°Р»РµРЅСЊРєРёС… СЌРєСЂР°РЅРѕРІ РјРѕР¶РЅРѕ СЃРґРµР»Р°С‚СЊ РѕРґРЅСѓ РєРѕР»РѕРЅРєСѓ */
 @media (max-width: 400px) {
     .cards {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
 }
