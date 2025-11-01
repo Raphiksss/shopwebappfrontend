@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+const API_BASE = import.meta.env.VITE_API_URL ?? "http://10.177.93.85:8000/api/v1";
 
 // универсальный запрос
 export async function request(path, method = "GET", body = null, headers = {}) {
@@ -22,10 +22,16 @@ export async function request(path, method = "GET", body = null, headers = {}) {
 //PRODUCTS
 export const apiProducts = {
     list: (params) => {
-        const q = params?.category
-            ? `?category=${encodeURIComponent(params.category)}`
-            : "";
-        return request(`/products/${q}`);
+        const category =
+            typeof params === "string" ? params : params?.category;
+
+        if (category) {
+            return request(
+                `/products/?category=${encodeURIComponent(category)}`
+            );
+        }
+
+        return request("/products/");
     },
     byId: (id) => request(`/products/${id}/`),
     create: (formData) => request("/products/", "POST", formData),
@@ -45,19 +51,19 @@ export const apiUsers = {
 
 //CART
 export const apiCart = {
-    get: (tgId) => request(`/get_cart/${tgId}/`),
+    get: (tgId) => request(`/cart/${tgId}/`),
     add: (tgId, prod_id) =>
-        request(`/add_to_cart/${tgId}/?prod_id=${prod_id}`, "POST"),
+        request(`/cart/${tgId}/?prod_id=${prod_id}`, "POST"),
     //удалить еденицу товара
     deleteItem: (tgId, prod_id) =>
         request(
-            `/delete_from_cart/?tg_id=${tgId}&prod_id=${prod_id}`,
+            `/cart/${tgId}/?prod_id=${prod_id}`,
             "DELETE"
         ),
-    deleteAll: (tgId) => request(`/delete_cart/${tgId}/`, "DELETE"),
+    deleteAll: (tgId) => request(`/cart/all_cart/${tgId}/`, "DELETE"),
     deleteOne: (tgId, prod_id) =>
         request(
-            `/delete_full_one_product/${tgId}/?prod_id=${prod_id}`,
+            `/cart/full_product/${tgId}/?prod_id=${prod_id}`,
             "DELETE"
         ),
 };

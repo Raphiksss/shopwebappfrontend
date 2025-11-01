@@ -1,26 +1,36 @@
+import clsx from "clsx";
+
 import { useFavoriteStore } from "../../../features/profile-favorites/model/useFavoriteStore";
 import HeartIcon from "../../assets/icons/heart.svg?react";
-import clsx from "clsx";
 
 import styles from "./FavoriteButton.module.css";
 
 export const FavoriteButton = ({ product, size = "medium" }) => {
     const tgId = 1;
-    const favorite = useFavoriteStore((s) => s.ids.has(Number(product.id)));
-    const toggle = useFavoriteStore((s) => s.toggleFavorite);
-    const busy = useFavoriteStore((s) => s.actionLoading);
+    const isFavorite = useFavoriteStore((state) =>
+        product ? state.isFavorite(product.id) : false
+    );
+    const toggleFavorite = useFavoriteStore((state) => state.toggleFavorite);
+    const actionLoading = useFavoriteStore((state) => state.actionLoading);
 
     if (!product) return null;
 
+    const handleClick = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleFavorite(tgId, product.id);
+    };
+
     return (
         <button
-            onClick={() => toggle(tgId, product.id)}
+            onClick={handleClick}
             className={styles.button}
-            disabled={busy}
+            title={isFavorite ? "Remove from favorites" : "Add to favorites"}
+            disabled={actionLoading}
         >
             <HeartIcon
                 className={clsx(styles.icon, styles[size], {
-                    [styles.active]: favorite,
+                    [styles.active]: isFavorite,
                 })}
             />
         </button>

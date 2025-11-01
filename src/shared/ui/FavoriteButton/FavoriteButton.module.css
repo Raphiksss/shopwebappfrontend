@@ -2,31 +2,80 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 4px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.button:hover {
+    transform: scale(1.1);
+}
+
+.button:active {
+    transform: scale(0.95);
 }
 
 .icon {
-    width: 20px;
-    height: 20px;
-    transition: fill 0.2s ease;
-    color: var(--blue);
+    width: 24px;
+    height: 24px;
+    transition: all 0.2s ease;
+    color: #ccc;
+    stroke: var(--blue);
+    stroke-width: 0.7px;
+    fill: transparent;
+    }
+    
+    .active {
+    color: #ff3b5c;
+    fill: #ff3b5c;
+    stroke: #ff3b5c;
+    stroke-width: 0.5px;
 }
 
-.active {
-    color: red;
+.animating {
+    animation: heartFill 0.4s ease-out;
+}
+
+@keyframes heartPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes heartFill {
+    0% {
+        fill: transparent;
+        transform: scale(1);
+    }
+    50% {
+        fill: #ff3b5c;
+        transform: scale(1.15);
+    }
+    100% {
+        fill: #ff3b5c;
+        transform: scale(1);
+    }
 }
 
 .small {
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
 }
 
 .medium {
-    width: 25px;
-    height: 25px;
+    width: 32px;
+    height: 32px;
 }
 
 .large {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
 }

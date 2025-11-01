@@ -6,17 +6,32 @@
 }
 .qtyBtn {
     border: none;
-    width: 25px;
-    height: 25px;
-    background: #eee;
-
-    font-size: 18px;
-    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    background: var(--blue);
+    color: white;
+    font-size: 16px;
+    border-radius: 4px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+.qtyBtn:hover {
+    background-color: #4ba5cc;
+}
+.qtyBtn:active {
+    background-color: #3d8eaf;
+}
+.qtyBtn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
 }
 .qtyNumber {
-    min-width: 22px;
+    min-width: 24px;
     text-align: center;
-    font-weight: bold;
-    color: var(--textGray);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--text);
 }

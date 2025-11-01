@@ -1,129 +1,144 @@
 .cards {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    /* grid-template-columns: 1fr 1fr; */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 8px;
+    max-width: 100%;
 }
 
 .card {
-    display: grid;
-    grid-template-columns: 90px 1fr;
-    grid-template-rows: 90px auto 40px;
-    gap: 5px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 10px;
-
-    font-family: Arial, sans-serif;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
     background-color: var(--white);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .imageContainer {
-    grid-column: 1;
-    grid-row: 1 / 2;
-    align-self: center;
+    width: 100%;
+    height: 140px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8;
 }
+
 .imageContainer img {
-    width: 70px;
-}
-.buttonContainer {
-    grid-column: 1/3;
-    grid-row: 3;
-    display: flex;
-    justify-content: center;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
 }
 
-.box {
-    grid-column: 1/3;
-    grid-row: 3;
-    display: flex;
-    justify-content: center;
+.card:hover .imageContainer img {
+    transform: scale(1.05);
 }
 
-.priceContainer {
-    grid-column: 2/3;
-    grid-row: 1/2;
+.contentContainer {
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    flex-grow: 1;
+    min-height: 120px;
+    position: relative;
 }
 
 .meta {
-    grid-column: 1/3;
-    grid-row: 2 / 3;
-    font-size: 12px;
-    color: var(--textGray);
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.image {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
+    margin-bottom: 4px;
 }
 
 .name {
-    font-size: 11px;
-    margin: 0 0 8px 0;
+    font-size: 13px;
+    font-weight: 500;
     color: var(--text);
-
+    margin: 0 0 4px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     text-overflow: ellipsis;
+    height: 32px;
 }
 
-.features {
-    font-size: 14px;
-    color: var(--textGray);
+.priceContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 12px;
-    line-height: 1.4;
 }
 
 .price {
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 600;
     color: var(--text);
-    margin-bottom: 5px;
 }
 
-.buyButton {
-    width: auto;
+.buttonContainer {
     margin-top: auto;
-    padding: 6px 10px;
-    background: var(--blue);
-    color: var(--text);
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 5px 0;
-    font-weight: bold;
+    width: 100%;
 }
 
-.icon {
-    width: 24px;
-    height: 24px;
-    color: var(--blue);
-    transition: color 0.2s ease;
-}
-.active {
-    color: red;
-}
-
-.priceButton {
-    background: none;
+.buttonContainer button {
+    width: 100%;
+    padding: 8px 0;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    background-color: var(--blue);
+    color: white;
     border: none;
     cursor: pointer;
-    padding: 0;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 2px 4px rgba(117, 203, 243, 0.2);
+    letter-spacing: 0.3px;
 }
 
-.activeBtn {
-    background-color: transparent;
-    color: red;
+.buttonContainer button:hover {
+    background-color: #67b8dd; /* Слегка темнее базового цвета */
+}
 
-    border: 1px solid red;
+.buttonContainer button:active {
+    background-color: #5bafd5;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    padding: 20px;
+    grid-column: 1 / -1;
 }
 
 .link {
     text-decoration: none;
     color: var(--text);
+    display: block;
+}
+
+/* Медиа-запросы удалены, чтобы всегда было две карточки в строке */
+
+.skeleton {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Для очень маленьких экранов можно сделать одну колонку */
+@media (max-width: 400px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Для очень маленьких экранов можно сделать одну колонку */
+@media (max-width: 400px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
 }
