@@ -14,7 +14,8 @@ import { useToastStore } from "../../../shared/model/useToasterStore";
 
 import styles from "./CatalogPage.module.css";
 
-export const CatalogPage = () => {
+export const
+    CatalogPage = () => {
     const { message, clearToast } = useToastStore();
 
     const [active, setActive] = useState(false);

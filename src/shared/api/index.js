@@ -85,6 +85,10 @@ export const apiProducts = {
     delete: (id) => request(`/products/${id}/`, "DELETE"),
 };
 
+export const apiCategories = {
+    list: () => request("/categories/"),
+};
+
 export const apiUsers = {
     getByTgId: (tgId) => request(`/get_user/${tgId}/`),
     create: (payload) => request("/create_user/", "POST", payload),
@@ -105,4 +109,3 @@ export const apiCart = {
     deleteOne: (tgId, prod_id) =>
         request(`/cart/full_product/${tgId}/?prod_id=${prod_id}`, "DELETE"),
 };
-

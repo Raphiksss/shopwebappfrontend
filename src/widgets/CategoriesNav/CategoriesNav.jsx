@@ -1,12 +1,49 @@
-import { useRef } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
+import clsx from "clsx";
 
 import styles from "./CategoriesNav.module.css";
 
-import LaptopIcon from "../../shared/assets/icons/laptop.svg?react";
-import MobileIcon from "../../shared/assets/icons/mobile.svg?react";
-import TvIcon from "../../shared/assets/icons/tv.svg?react";
-import FanIcon from "../../shared/assets/icons/fan.svg?react";
+import { useCategoryStore } from "../../entities/category/model/useCategoryStore";
+
+const slugify = (value) => {
+    if (!value) return null;
+    const trimmed = value.toString().trim();
+    if (!trimmed) return null;
+
+    const latinSlug = trimmed
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+
+    if (latinSlug) {
+        return latinSlug;
+    }
+
+    return encodeURIComponent(trimmed.replace(/\s+/g, "-"));
+};
+
+const CategoryAvatar = ({ title, imageUrl }) => {
+    const [hasError, setHasError] = useState(false);
+    const fallback = title?.trim()?.[0]?.toUpperCase() ?? "?";
+    const showFallback = !imageUrl || hasError;
+
+    return (
+        <div className={styles.avatarWrapper}>
+            {!showFallback && (
+                <img
+                    src={imageUrl}
+                    alt={title}
+                    className={styles.avatar}
+                    onError={() => setHasError(true)}
+                />
+            )}
+            {showFallback && (
+                <span className={styles.avatarFallback}>{fallback}</span>
+            )}
+        </div>
+    );
+};
 
 export const CategoriesNav = () => {
     const navRef = useRef(null);
@@ -14,71 +51,99 @@ export const CategoriesNav = () => {
     const startX = useRef(0);
     const scrollLeft = useRef(0);
 
-    const handleMouseDown = (e) => {
-        e.preventDefault();
+    const { categories, loading, error, loadCategories } = useCategoryStore();
+
+    useEffect(() => {
+        loadCategories();
+    }, [loadCategories]);
+
+    const handleMouseDown = (event) => {
+        if (!navRef.current) return;
+        event.preventDefault();
         isDragging.current = true;
-        startX.current = e.pageX - navRef.current.offsetLeft;
+        startX.current = event.pageX - navRef.current.offsetLeft;
         scrollLeft.current = navRef.current.scrollLeft;
     };
 
-    const handleMouseMove = (e) => {
-        if (!isDragging.current) return;
-        e.preventDefault();
-        const x = e.pageX - navRef.current.offsetLeft;
-        const walk = (x - startX.current) * 1;
+    const handleMouseMove = (event) => {
+        if (!isDragging.current || !navRef.current) return;
+        event.preventDefault();
+        const x = event.pageX - navRef.current.offsetLeft;
+        const walk = x - startX.current;
         navRef.current.scrollLeft = scrollLeft.current - walk;
     };
 
-    const handleMouseUp = () => {
+    const stopDragging = () => {
         isDragging.current = false;
     };
 
-    const categories = [
-        {
-            path: "fan",
-            label: "Вентиляторы",
-            icon: <FanIcon className={styles.icon} />,
-        },
-        {
-            path: "tv",
-            label: "Телевизоры",
-            icon: <TvIcon className={styles.icon} />,
-        },
-        {
-            path: "mobile",
-            label: "Смартфоны",
-            icon: <MobileIcon className={styles.icon} />,
-        },
-        {
-            path: "laptop",
-            label: "Ноутбуки",
-            icon: <LaptopIcon className={styles.icon} />,
-        },
-    ];
+    const preparedCategories = (categories ?? [])
+        .map((category) => {
+            const slug =
+                category?.slug ||
+                category?.path ||
+                slugify(category?.code) ||
+                slugify(category?.title);
+
+            if (!slug) return null;
+
+            return {
+                id: category?.id ?? slug,
+                slug,
+                title: category?.title ?? slug,
+                imageUrl:
+                    category?.img ??
+                    category?.image_url ??
+                    category?.imageUrl ??
+                    category?.image,
+            };
+        })
+        .filter(Boolean);
+
+    const showSkeleton = loading && preparedCategories.length === 0;
+    const showEmpty = !loading && !error && preparedCategories.length === 0;
 
     return (
         <>
             <div className={styles.subtitle}>Категории</div>
+            {error && <div className={styles.error}>{error}</div>}
             <nav
                 ref={navRef}
                 className={styles.nav}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseUp}
-                onMouseUp={handleMouseUp}
+                onMouseLeave={stopDragging}
+                onMouseUp={stopDragging}
             >
-                {categories.map((cat) => (
+                {showSkeleton &&
+                    Array.from({ length: 6 }).map((_, index) => (
+                        <div key={index} className={styles.skeletonItem}>
+                            <div className={styles.skeletonAvatar} />
+                            <div className={styles.skeletonTitle} />
+                        </div>
+                    ))}
+
+                {preparedCategories.map((category) => (
                     <NavLink
-                        key={cat.path}
-                        to={`/catalog/${cat.path}`}
+                        key={category.id}
+                        to={`/catalog/${category.slug}`}
                         className={({ isActive }) =>
-                            `${styles.link} ${isActive ? styles.active : ""}`
+                            clsx(styles.link, { [styles.active]: isActive })
                         }
                     >
-                        {cat.icon}
-                        <div className={styles.title}>{cat.label}</div>
+                        <CategoryAvatar
+                            title={category.title}
+                            imageUrl={category.imageUrl}
+                        />
+                        <div className={styles.title}>{category.title}</div>
                     </NavLink>
                 ))}
+
+                {showEmpty && (
+                    <div className={styles.emptyState}>
+                        Категории скоро появятся
+                    </div>
+                )}
             </nav>
         </>
     );
