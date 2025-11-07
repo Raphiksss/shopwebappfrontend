@@ -69,24 +69,14 @@ export const
             <CategoriesNav />
             <Toaster message={message} onClose={clearToast} />
             <Routes>
-                <Route path="/" element={<Navigate to="fan" />} />
+                {/* Remove the redirect to "fan" and make it show all products by default */}
+                <Route path="/" element={<ProductCards sort={sort} />} />
                 <Route
-                    path="fan"
-                    element={<ProductCards category="fan" sort={sort} />}
-                />
-                <Route
-                    path="tv"
-                    element={<ProductCards category="tv" sort={sort} />}
-                />
-                <Route
-                    path="mobile"
-                    element={<ProductCards category="mobile" sort={sort} />}
-                />
-                <Route
-                    path="laptop"
-                    element={<ProductCards category="laptop" sort={sort} />}
+                    path="/:category"
+                    element={<ProductCards sort={sort} />}
                 />
             </Routes>
+
             <AnimatePresence>
                 {active && (
                     <motion.div
