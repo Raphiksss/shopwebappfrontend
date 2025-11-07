@@ -69,7 +69,7 @@ export const
             <CategoriesNav />
             <Toaster message={message} onClose={clearToast} />
             <Routes>
-                {/* Remove the redirect to "fan" and make it show all products by default */}
+                {/* Показывать все товары на главной странице каталога */}
                 <Route path="/" element={<ProductCards sort={sort} />} />
                 <Route
                     path="/:category"

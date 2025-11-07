@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { useProductsStore } from "../model/useProductStore";
 import { CartControls } from "../../../shared/ui/CartControl/CartControls";
@@ -8,7 +8,8 @@ import { FavoriteButton } from "../../../shared/ui/FavoriteButton/FavoriteButton
 
 import styles from "./ProductCards.module.css";
 
-const ProductCards = ({ category, sort }) => {
+const ProductCards = ({ sort }) => {
+    const { category } = useParams();
     const { loadProducts, getProducts, loading, error } = useProductsStore();
 
     useEffect(() => {
@@ -17,15 +18,54 @@ const ProductCards = ({ category, sort }) => {
 
     const products = getProducts(category);
 
+    // Для отладки - выводим данные о фильтрации
+    useEffect(() => {
+        if (products && products.length > 0) {
+            console.log("Пример продукта:", products[0]);
+            console.log("URL параметр category:", category);
+            console.log("Уникальные категории товаров:", 
+                [...new Set(products.map(p => p.category_title))]);
+        }
+    }, [products, category]);
+    
+    // Функция для преобразования категорий в нормализованный формат
+    const normalizeCategory = (cat) => {
+        if (!cat) return '';
+        // Преобразуем в нижний регистр и удаляем лишние пробелы
+        return cat.toLowerCase().trim();
+    };
+    
+    // Функция для проверки соответствия категорий
+    const categoryMatches = (productCategory, urlCategory) => {
+        if (!productCategory || !urlCategory) return false;
+        
+        const normalizedProduct = normalizeCategory(productCategory);
+        const normalizedUrl = normalizeCategory(urlCategory);
+        
+        // Точное совпадение
+        if (normalizedProduct === normalizedUrl) return true;
+        
+        // URL может использовать дефисы вместо пробелов
+        const urlWithSpaces = normalizedUrl.replace(/-/g, ' ');
+        if (normalizedProduct === urlWithSpaces) return true;
+        
+        // URL может опускать пробелы
+        const productWithoutSpaces = normalizedProduct.replace(/\s+/g, '');
+        const urlWithoutSpaces = normalizedUrl.replace(/\s+/g, '');
+        if (productWithoutSpaces === urlWithoutSpaces) return true;
+        
+        return false;
+    };
+    
     const filtered = useMemo(() => {
         if (!Array.isArray(products)) return [];
         let arr = products;
-
+    
         if (category) {
-            arr = arr.filter(
-                (p) =>
-                    p?.category?.toLowerCase() === category?.toLowerCase()
-            );
+            arr = arr.filter(p => categoryMatches(p?.category_title, category));
+            
+            // Для отладки - выводим количество отфильтрованных товаров
+            console.log(`Отфильтровано ${arr.length} товаров для категории "${category}"`);
         }
 
         if (sort === "expensive") {
