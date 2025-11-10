@@ -9,7 +9,12 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [react(), svgr()],
         server: {
+            host: "0.0.0.0",
             port: 5173,
+            allowedHosts: [
+                ".ngrok-free.app",
+                ".trycloudflare.com",
+            ],
             proxy: {
                 "/api": {
                     target: proxyTarget,
