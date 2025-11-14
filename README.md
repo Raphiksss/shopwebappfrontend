@@ -28,3 +28,14 @@ git clone https://github.com/doublebanan/mag.git
 cd mag
 npm install
 npm run dev
+
+## Telegram WebApp
+
+Приложение теперь инициализируется через Telegram WebApp. Для локальной отладки вне Telegram создайте файл `.env.local` и задайте переменную:
+
+```
+VITE_DEV_TG_ID=1
+```
+
+На проде`tg_id` автоматически берётся из `window.Telegram.WebApp.initDataUnsafe.user.id`.
+

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Button } from "../../../shared/assets/Button/Button";
 import { useFavoriteStore } from "../model/useFavoriteStore";
 import { useProductsStore } from "../../../entities/product/model/useProductStore";
+import { useTelegramStore } from "../../../entities/telegram/model/useTelegramStore";
 import { CartControls } from "../../../shared/ui/CartControl/CartControls";
 import { useGoToCatalog } from "../../../shared/lib/goToCatalog";
 
@@ -10,8 +11,7 @@ import styles from "./profile-favorites.module.css";
 import CrossIcon from "../../../shared/assets/icons/cross.svg?react";
 
 export const FavoritesList = () => {
-    const tgId = 1;
-
+    const tgId = useTelegramStore((state) => state.tgId);
     const favoriteIds = useFavoriteStore((state) => Array.from(state.ids));
     const removeFavorite = useFavoriteStore((state) => state.removeFavorite);
     const fetchFavorites = useFavoriteStore((state) => state.fetchFavorites);
@@ -21,9 +21,8 @@ export const FavoritesList = () => {
     const goToCatalog = useGoToCatalog();
 
     useEffect(() => {
-        if (tgId) {
-            fetchFavorites(tgId);
-        }
+        if (!tgId) return;
+        fetchFavorites(tgId);
     }, [tgId, fetchFavorites]);
 
     const products = favoriteIds
@@ -64,9 +63,10 @@ export const FavoritesList = () => {
                                     </span>
                                 </div>
                                 <button
-                                    onClick={() =>
-                                        removeFavorite(tgId, product.id)
-                                    }
+                                    onClick={() => {
+                                        if (!tgId) return;
+                                        removeFavorite(tgId, product.id);
+                                    }}
                                     className={styles.button}
                                 >
                                     <CrossIcon className={styles.icon} />

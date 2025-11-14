@@ -34,3 +34,20 @@
     color: #666;
     font-size: 14px;
 }
+
+.balance {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text);
+}
+
+.balanceAmount {
+    color: var(--blue);
+}
+
+.error {
+    margin-top: 8px;
+    color: #d93025;
+    font-size: 13px;
+}

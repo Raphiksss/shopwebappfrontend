@@ -90,7 +90,7 @@ export const apiCategories = {
 };
 
 export const apiUsers = {
-    getByTgId: (tgId) => request(`/get_user/${tgId}/`),
+    getByTgId: (tgId) => request(`/users/${tgId}/`),
     create: (payload) => request("/create_user/", "POST", payload),
     favorites: (tgId) => request(`/favorites/${tgId}/`),
     favAdd: (tgId, prodId) =>

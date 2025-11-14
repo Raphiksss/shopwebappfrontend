@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => {
                 ".ngrok-free.app",
                 ".trycloudflare.com",
             ],
-            proxy: {
+            proxy:{
                 "/api": {
                     target: proxyTarget,
                     changeOrigin: true,
@@ -23,4 +23,5 @@ export default defineConfig(({ mode }) => {
             },
         },
     };
+
 });

@@ -1,10 +1,11 @@
 import { useCartStore } from "../../../features/cart/model/useCartStore";
+import { useTelegramStore } from "../../../entities/telegram/model/useTelegramStore";
 import { Button } from "../../assets/Button/Button";
 import { QtyBox } from "../QtyBox/QtyBox";
 import { useToastStore } from "../../../shared/model/useToasterStore";
 
-export const CartControls = ({ product, size, text = "Купить" }) => {
-    const tgId = 1;
+export const CartControls = ({ product, size, text = "�?�?����'�?" }) => {
+    const tgId = useTelegramStore((state) => state.tgId);
     const { addToCart, removeFromCartOneCurrent, actionLoading, cart } =
         useCartStore();
     const { showToast } = useToastStore();
@@ -12,24 +13,39 @@ export const CartControls = ({ product, size, text = "Купить" }) => {
     if (!product) return null;
 
     const count = product ? cart[product.id] || 0 : 0;
+    const controlsDisabled = actionLoading || !tgId;
+
+    const handleAdd = () => {
+        if (!tgId) return;
+        addToCart(tgId, product.id);
+    };
+
+    const handlePrimaryAdd = () => {
+        handleAdd();
+        if (tgId) {
+            showToast("Товар добавлен успешно!");
+        }
+    };
+
+    const handleRemove = () => {
+        if (!tgId) return;
+        removeFromCartOneCurrent(tgId, product.id);
+    };
 
     return count === 0 ? (
         <Button
             size={size}
-            onClick={() => {
-                addToCart(tgId, product.id);
-                showToast("Товар добавлен!");
-            }}
-            disabled={actionLoading}
+            onClick={handlePrimaryAdd}
+            disabled={controlsDisabled}
         >
             {text}
         </Button>
     ) : (
         <QtyBox
             count={count}
-            onDecrement={() => removeFromCartOneCurrent(tgId, product.id)}
-            onIncrement={() => addToCart(tgId, product.id)}
-            disabled={actionLoading}
+            onDecrement={handleRemove}
+            onIncrement={handleAdd}
+            disabled={controlsDisabled}
         />
     );
 };

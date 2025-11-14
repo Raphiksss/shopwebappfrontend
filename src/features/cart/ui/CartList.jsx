@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 import { useCartStore } from "../model/useCartStore";
 import { useProductsStore } from "../../../entities/product/model/useProductStore";
+import { useTelegramStore } from "../../../entities/telegram/model/useTelegramStore";
 import { CartControls } from "../../../shared/ui/CartControl/CartControls";
 import { Skeleton } from "../../../shared/ui/Skeleton/Skeleton";
 import { FavoriteButton } from "../../../shared/ui/FavoriteButton/FavoriteButton";
@@ -10,7 +11,7 @@ import CrossIcon from "../../../shared/assets/icons/cross.svg?react";
 import styles from "./CartList.module.css";
 
 export const CartList = () => {
-    const tgId = 1;
+    const tgId = useTelegramStore((state) => state.tgId);
 
     const { fetchCart, loading, cart, removeFromCart, current } =
         useCartStore();
@@ -18,9 +19,13 @@ export const CartList = () => {
     const loadProducts = useProductsStore((state) => state.loadProducts);
 
     useEffect(() => {
-        fetchCart(tgId, false);
         loadProducts();
-    }, []);
+    }, [loadProducts]);
+
+    useEffect(() => {
+        if (!tgId) return;
+        fetchCart(tgId, false);
+    }, [fetchCart, tgId]);
 
     const getProductById = useProductsStore((state) => state.getProductById);
 
@@ -67,7 +72,10 @@ export const CartList = () => {
                             </div>
                             <FavoriteButton product={product} />
                             <button
-                                onClick={() => removeFromCart(tgId, product.id)}
+                                onClick={() => {
+                                    if (!tgId) return;
+                                    removeFromCart(tgId, product.id);
+                                }}
                                 className={styles.button}
                             >
                                 <CrossIcon className={styles.icon} />
