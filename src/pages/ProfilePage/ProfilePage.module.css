@@ -4,12 +4,19 @@
 }
 
 .editButton {
-    background: none;
-    border: 1px solid #ddd;
-    padding: 5px 15px;
-    border-radius: 4px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 8px 18px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 14px;
+    color: var(--text);
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.editButton:hover {
+    border-color: var(--blue);
+    color: var(--blue);
 }
 
 .tabContent h3 {
@@ -20,16 +27,18 @@
 .emptyState {
     text-align: center;
     padding: 40px 20px;
-    color: #666;
+    color: var(--muted);
 }
 
 .actionButton {
     margin-top: 15px;
-    padding: 10px 20px;
-    background-color: var(--blue);
-    color: var(--text);
+    padding: 12px 24px;
+    background: linear-gradient(120deg, #ff2e63, #ff4d4d);
+    color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 15px 30px rgba(255, 46, 99, 0.35);
 }

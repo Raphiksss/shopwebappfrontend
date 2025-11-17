@@ -10,28 +10,29 @@
 }
 
 .promoSection {
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
     padding-top: 12px;
-    margin-bottom: 10px;
-    max-width: 400px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    padding: 16px;
-    background-color: #fff;
+    margin-bottom: 12px;
+    max-width: 420px;
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    padding: 20px;
+    background-color: var(--surface);
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .promoTitle {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     margin: 0 0 12px 0;
-    color: #000;
+    color: var(--text);
 }
 
 .promoRow {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
-    color: #666;
+    color: var(--muted);
 }
 
 .promoPrice {
@@ -39,16 +40,16 @@
     justify-content: space-between;
     align-items: center;
     font-size: 14px;
-
-    color: rgb(255, 133, 133);
-    font-weight: 500;
+    color: var(--blue);
+    font-weight: 600;
 }
 
 .totalPrice {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 14px;
-    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.02);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .input {
@@ -57,6 +58,7 @@
     outline: none;
     background: transparent;
     width: 100%;
+    color: var(--text);
 }
 
 .priceRow {
@@ -71,18 +73,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 400px;
-    height: 76px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    padding: 16px;
-    background-color: #fff;
-    gap: 5px;
+    max-width: 420px;
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    padding: 18px 20px;
+    background-color: var(--surface);
+    gap: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .productCount {
     font-size: 14px;
-    color: #666;
+    color: var(--muted);
 }
 
 .priceComparison {
@@ -93,36 +95,38 @@
 }
 
 .discountedPrice {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
-    color: #000;
+    color: #fff;
 }
 
 .checkoutButton {
-    background-color: #75cbf3;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    padding: 12px 24px;
+    background: linear-gradient(120deg, #ff2e63, #ff4d4d);
+    border: none;
+    border-radius: 12px;
+    padding: 12px 26px;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: #fff;
+    box-shadow: 0 15px 30px rgba(255, 46, 99, 0.35);
 }
 
 .checkoutButton:hover {
-    background-color: white;
-    color: var(--blue);
-    border: 1px solid #75cbf3;
+    transform: translateY(-1px);
+    box-shadow: 0 20px 35px rgba(255, 46, 99, 0.4);
 }
 
 .actionButton {
     margin-top: 15px;
-    padding: 10px 20px;
-    background-color: var(--blue);
-    color: var(--text);
+    padding: 12px 24px;
+    background: linear-gradient(120deg, #ff2e63, #ff4d4d);
+    color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 500;
+    box-shadow: 0 12px 30px rgba(255, 46, 99, 0.3);
 }

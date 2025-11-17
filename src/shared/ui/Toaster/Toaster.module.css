@@ -3,17 +3,21 @@
     bottom: 200px;
     left: 50%;
     transform: translateX(-50%);
-    background: #23272f;
+    background: rgba(10, 10, 16, 0.95);
     color: #fff;
-    padding: 14px 24px;
-    border-radius: 8px;
+    padding: 14px 28px;
+    border-radius: 14px;
     font-size: 16px;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease;
     z-index: 1000;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(255, 46, 99, 0.25);
 }
 
 .show {
     opacity: 1;
+    transform: translate(-50%, -6px);
 }

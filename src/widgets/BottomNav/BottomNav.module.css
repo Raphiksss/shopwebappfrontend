@@ -2,13 +2,18 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 56px;
-    border: 1px solid #e0e0e0;
-    background: white;
+    height: 68px;
+    border-radius: 22px;
+    background: rgba(10, 10, 16, 0.9);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.65),
+        0 0 25px rgba(255, 46, 99, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
     position: sticky;
-    bottom: 0;
-    margin: 0 10px 15px 10px;
-    border-radius: 12px;
+    bottom: 16px;
+    margin: 0 0 8px;
+    padding: 0 8px;
+    z-index: 20;
 }
 
 .nav a {
@@ -16,45 +21,48 @@
     flex-direction: column;
     align-items: center;
     text-decoration: none;
-    font-size: 22px;
-    color: #888;
+    font-size: 20px;
+    color: var(--muted);
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .nav a.active .icon {
     color: var(--blue);
-    transform: scale(1.1);
+    transform: scale(1.12);
+    text-shadow: 0 0 12px rgba(255, 46, 99, 0.6);
 }
 
 .nav a.active .title {
-    color: var(--blue);
-    font-weight: 500;
+    color: var(--text);
+    font-weight: 600;
 }
 
 .icon {
     width: 24px;
     height: 24px;
-    color: black;
+    margin-bottom: 4px;
+    color: currentColor;
+    transition: inherit;
 }
 
 .title {
     position: relative;
     font-size: 12px;
+    letter-spacing: 0.02em;
 }
 
 .badge {
     position: absolute;
-    top: -26px;
-    right: 4px;
-    background: red;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 2px;
+    top: -22px;
+    right: 6px;
+    background: var(--blue);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 5px;
     border-radius: 999px;
     min-width: 16px;
-    min-height: 16px;
     text-align: center;
     line-height: 1;
-    transform: none;
-    z-index: 10;
+    box-shadow: 0 0 12px rgba(255, 46, 99, 0.5);
 }

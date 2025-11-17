@@ -1,8 +1,9 @@
 .tabContent {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    background: var(--surface-elevated);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .subtitle {
@@ -13,23 +14,24 @@
 .emptyState {
     text-align: center;
     padding: 40px 0px;
-    color: #666;
+    color: var(--muted);
 }
 
 .actionButton {
     margin-top: 15px;
-    padding: 10px 20px;
-    background-color: var(--blue);
-    color: var(--text);
+    padding: 12px 24px;
+    background: linear-gradient(120deg, #ff2e63, #ff4d4d);
+    color: #fff;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 16px;
+    box-shadow: 0 15px 30px rgba(255, 46, 99, 0.35);
 }
 
 .title {
     font-size: 16px;
     font-weight: 500;
-    color: var(--textGray);
+    color: var(--muted);
     margin-bottom: 20px;
 }

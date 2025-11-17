@@ -1,8 +1,12 @@
 :root {
-    --text: #333;
-    --textGray: #666;
-    --blue: #75cbf3;
-    --bgGray: #f5f6f7;
-    --solid: #e0e0e0;
-    --white: #fff;
+    --text: #f5f5f7;
+    --textGray: #9fa1a6;
+    --blue: #ff2e63;
+    --bgGray: #050505;
+    --solid: #262631;
+    --white: #111117;
+    --surface: #15151f;
+    --surface-elevated: #1f1f2b;
+    --glow: rgba(255, 46, 99, 0.4);
+    --muted: #5a5a66;
 }

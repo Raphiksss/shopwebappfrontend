@@ -1,8 +1,9 @@
 .tabContent {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    background: var(--surface-elevated);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .title {
@@ -14,18 +15,19 @@
     margin: 0 0 15px 0;
     font-size: 18px;
     color: var(--text);
+    letter-spacing: 0.03em;
 }
 .sum {
     margin: 0 0 15px 0;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 700;
-    color: var(--text);
+    color: var(--blue);
 }
 
 .paymentMethods {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 18px;
 }
 
 .paymentCard {
@@ -33,29 +35,36 @@
     justify-content: space-between;
     align-items: center;
     padding: 15px;
-    border: 1px solid #eee;
-    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.02);
 }
 
 .cardInfo {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    color: var(--text);
 }
 
 .cardAction {
     background: none;
     border: none;
-    color: #ff4d4d;
+    color: var(--blue);
     cursor: pointer;
     font-size: 14px;
 }
 
 .searchInput {
     width: 100%;
-    height: 42px;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    height: 46px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
     font-size: 14px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+}
+.searchInput::placeholder {
+    color: var(--muted);
 }

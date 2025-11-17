@@ -4,7 +4,7 @@ import { Button } from "../../assets/Button/Button";
 import { QtyBox } from "../QtyBox/QtyBox";
 import { useToastStore } from "../../../shared/model/useToasterStore";
 
-export const CartControls = ({ product, size, text = "�?�?����'�?" }) => {
+export const CartControls = ({ product, size, text = "Добавить в корзину" }) => {
     const tgId = useTelegramStore((state) => state.tgId);
     const { addToCart, removeFromCartOneCurrent, actionLoading, cart } =
         useCartStore();
