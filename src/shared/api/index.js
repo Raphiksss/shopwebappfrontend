@@ -52,8 +52,16 @@ export async function request(path, method = "GET", body = null, headers = {}) {
     const opts = { method, headers };
 
     if (body && !(body instanceof FormData)) {
-        opts.headers["Content-Type"] = "application/json";
-        opts.body = JSON.stringify(body);
+        const hasContentType =
+            Object.keys(opts.headers).some(
+                (key) => key.toLowerCase() === "content-type"
+            ) ?? false;
+        if (!hasContentType) {
+            opts.headers["Content-Type"] = "application/json";
+            opts.body = JSON.stringify(body);
+        } else {
+            opts.body = body;
+        }
     } else if (body) {
         opts.body = body;
     }
@@ -108,4 +116,9 @@ export const apiCart = {
     deleteAll: (tgId) => request(`/cart/all_cart/${tgId}/`, "DELETE"),
     deleteOne: (tgId, prod_id) =>
         request(`/cart/full_product/${tgId}/?prod_id=${prod_id}`, "DELETE"),
+};
+
+export const apiOrders = {
+    create: (tgId) =>
+        request(`/orders/?tg_id=${encodeURIComponent(tgId)}`, "POST"),
 };

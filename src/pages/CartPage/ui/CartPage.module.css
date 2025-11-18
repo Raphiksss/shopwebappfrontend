@@ -21,6 +21,12 @@
     border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
+.promoDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .promoTitle {
     font-size: 16px;
     font-weight: 600;
@@ -116,6 +122,11 @@
 .checkoutButton:hover {
     transform: translateY(-1px);
     box-shadow: 0 20px 35px rgba(255, 46, 99, 0.4);
+}
+
+.checkoutButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .actionButton {
