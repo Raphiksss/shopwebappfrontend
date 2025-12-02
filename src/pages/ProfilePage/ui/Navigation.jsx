@@ -1,4 +1,4 @@
-import styles from "./navigation.module.css";
+import styles from "./Navigation.module.css";
 
 import HeartIcon from "../../../shared/assets/icons/heart.svg?react";
 import BoxIcon from "../../../shared/assets/icons/box.svg?react";
