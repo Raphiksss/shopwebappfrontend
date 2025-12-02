@@ -30,6 +30,7 @@ cd mag
 npm install
 npm run dev
 
+
 ## Telegram WebApp
 
 Приложение теперь инициализируется через Telegram WebApp. Для локальной отладки вне Telegram создайте файл `.env.local` и задайте переменную:
