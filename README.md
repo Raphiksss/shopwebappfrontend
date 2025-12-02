@@ -37,6 +37,7 @@ npm run dev
 
 ```
 VITE_DEV_TG_ID=1
+
 ```
 
 На проде`tg_id` автоматически берётся из `window.Telegram.WebApp.initDataUnsafe.user.id`.
