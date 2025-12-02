@@ -10,7 +10,7 @@ export const useCartStore = create((set, get) => ({
     actionLoading: false,
     error: null,
 
-    //получить корзину ид тг или пустую
+    //получить корзину ид тг или пустуютак и т
 
     fetchCart: async (tgId, isInitial = false) => {
         if (isInitial) set({ loading: true, error: null });
@@ -35,6 +35,7 @@ export const useCartStore = create((set, get) => ({
             await get().fetchCart(tg_id, false);
         } catch (e) {
             set({ error: e.message });
+
         } finally {
             set({ actionLoading: false });
         }

@@ -28,6 +28,7 @@ export const CartPage = () => {
         data: state.data,
         loadUser: state.loadUser,
     }));
+    const closeTelegramApp = useTelegramStore((state) => state.closeApp);
     const { showToast } = useToastStore();
 
     useEffect(() => {
@@ -61,6 +62,7 @@ export const CartPage = () => {
             setIsOrdering(true);
             await apiOrders.create(tgId);
             showToast("Заказ успешно оформлен!");
+            closeTelegramApp?.();
         } catch (error) {
             console.error("Order creation failed:", error);
             showToast("Не удалось оформить заказ. Попробуйте позже.");

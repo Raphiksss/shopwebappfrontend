@@ -122,3 +122,16 @@ export const apiOrders = {
     create: (tgId) =>
         request(`/orders/?tg_id=${encodeURIComponent(tgId)}`, "POST"),
 };
+
+export const apiPayments = {
+    replenishStars: (tgId, amount) =>
+        request(
+            `/users/replenisment/stars/?tg_id=${encodeURIComponent(tgId)}&amount=${encodeURIComponent(amount)}`,
+            "POST"
+        ),
+    replenishCrypto: (tgId, amount) =>
+        request(
+            `/users/replenisment/crypto/?tg_id=${encodeURIComponent(tgId)}&amount=${encodeURIComponent(amount)}`,
+            "POST"
+        ),
+};

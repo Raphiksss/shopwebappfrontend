@@ -55,9 +55,6 @@ export const useTelegramStore = create((set, get) => ({
         }
 
         try {
-            webApp.ready();
-            webApp.expand?.();
-
             const user = webApp?.initDataUnsafe?.user ?? null;
             const tgId = parseId(user?.id);
 
@@ -68,6 +65,9 @@ export const useTelegramStore = create((set, get) => ({
                 isReady: true,
                 error: null,
             });
+            webApp.ready();
+            webApp.expand?.();
+            webApp.expand?.();
         } catch (error) {
             console.warn("Telegram init failed:", error);
             set({
@@ -78,6 +78,11 @@ export const useTelegramStore = create((set, get) => ({
                 error: error?.message ?? "Failed to init Telegram WebApp",
             });
         }
+    },
+
+    closeApp: () => {
+        const webApp = get().webApp;
+        webApp?.close?.();
     },
 
     setManualTgId: (value) => {
