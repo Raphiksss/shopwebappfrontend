@@ -16,8 +16,9 @@ const API_PREFIX = normalizePrefix(
     import.meta.env.VITE_API_PREFIX ?? DEFAULT_PREFIX
 );
 
-
-const API_HOST = import.meta.env.VITE_API_URL
+// В production всегда используем относительные пути (для Cloudflare Functions)
+// В dev режиме используем VITE_API_URL если задана
+const API_HOST = DEV && import.meta.env.VITE_API_URL
     ? normalizeHost(import.meta.env.VITE_API_URL)
     : "";
 
