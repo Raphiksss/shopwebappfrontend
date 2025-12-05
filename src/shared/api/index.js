@@ -3,18 +3,6 @@ const DEFAULT_PORT = "8000";
 const DEFAULT_HOST = "http://localhost:8000";
 const DEFAULT_PREFIX = "/api/v1";
 
-const API_PREFIX = normalizePrefix(
-    import.meta.env.VITE_API_PREFIX ?? DEFAULT_PREFIX
-);
-
-const API_HOST = import.meta.env.VITE_API_URL
-    ? normalizeHost(import.meta.env.VITE_API_URL)
-    : DEV
-    ? ""
-    : normalizeHost(
-          buildHostFromWindow() ?? DEFAULT_HOST
-      );
-
 function normalizeHost(value) {
     return value.replace(/\/+$/, "");
 }
@@ -23,6 +11,14 @@ function normalizePrefix(value) {
     if (!value) return "";
     return value.startsWith("/") ? value.replace(/\/+$/, "") : `/${value}`;
 }
+
+const API_PREFIX = normalizePrefix(
+    import.meta.env.VITE_API_PREFIX ?? DEFAULT_PREFIX
+);
+
+const API_HOST = import.meta.env.VITE_API_URL
+    ? normalizeHost(import.meta.env.VITE_API_URL)
+    : "";
 
 function buildHostFromWindow() {
     if (typeof window === "undefined") return null;
