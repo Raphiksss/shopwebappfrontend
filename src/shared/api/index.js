@@ -16,6 +16,7 @@ const API_PREFIX = normalizePrefix(
     import.meta.env.VITE_API_PREFIX ?? DEFAULT_PREFIX
 );
 
+
 const API_HOST = import.meta.env.VITE_API_URL
     ? normalizeHost(import.meta.env.VITE_API_URL)
     : "";
