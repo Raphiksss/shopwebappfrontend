@@ -4,13 +4,28 @@ export async function onRequest(context) {
     const { request } = context;
     const url = new URL(request.url);
 
+    // Обработка CORS preflight запросов
+    if (request.method === 'OPTIONS') {
+        return new Response(null, {
+            status: 204,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                'Access-Control-Max-Age': '86400',
+            },
+        });
+    }
+
     // Формируем URL для backend API
-    const apiPath = url.pathname.replace(/^\/api/, '/api');
-    const apiUrl = `${API_BASE_URL}${apiPath}${url.search}`;
+    // Убираем /api из начала пути и добавляем к базовому URL
+    const apiPath = url.pathname.replace(/^\/api/, '');
+    const apiUrl = `${API_BASE_URL}/api/v1${apiPath}${url.search}`;
 
     // Копируем headers из оригинального запроса
     const headers = new Headers(request.headers);
     headers.set('Host', new URL(API_BASE_URL).host);
+    headers.delete('origin'); // Удаляем origin header чтобы избежать CORS проблем на бэке
 
     // Создаем новый запрос к backend API
     const apiRequest = new Request(apiUrl, {
