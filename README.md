@@ -25,8 +25,8 @@ React, React Router v6, Zustand, Vite, CSS-модули, Framer Motion
 Проект разрабатывался совместно с backend-разработчиком. В процессе был постоянный диалог по структуре, API и оптимизации архитектурных решений.
 
 Запуск проекта:
-git clone https://github.com/doublebanan/mag.git
-cd mag
+git clone https://github.com/doublebanan/mag.gi*t
+cd mag*
 npm install
 npm run dev
 
