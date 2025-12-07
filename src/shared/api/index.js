@@ -44,7 +44,6 @@ function buildPath(path) {
     return normalized;
 }
 
-
 export async function request(path, method = "GET", body = null, headers = {}) {
     const opts = { method, headers };
 
