@@ -7,6 +7,7 @@ import { ProfilePage } from "../pages/ProfilePage";
 import { BottomNav } from "../widgets/BottomNav/BottomNav";
 import { ProductPage } from "../pages/ProductPage";
 import AdminPanel from "../pages/AdminPanel";
+import { WebAppWarning } from "../shared/ui/WebAppWarning/WebAppWarning";
 
 // import { RequireRole } from "../features/auth/ui/RequireRole";
 // import { useAuthStore } from "../features/auth/model/useAuthStore";
@@ -42,6 +43,7 @@ function App() {
                 </main>
 
                 <BottomNav />
+                <WebAppWarning />
             </div>
         </BrowserRouter>
     );
