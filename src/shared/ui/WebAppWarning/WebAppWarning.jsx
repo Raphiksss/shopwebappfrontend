@@ -3,18 +3,30 @@ import { useTelegramStore } from "../../../entities/telegram/model/useTelegramSt
 import styles from "./WebAppWarning.module.css";
 
 export const WebAppWarning = () => {
-    const { webApp, isReady } = useTelegramStore();
     const [isDismissed, setIsDismissed] = useState(false);
+    const [isWebApp, setIsWebApp] = useState(false);
 
-    // Показываем предупреждение только если:
-    // 1. Telegram инициализирован (isReady)
-    // 2. WebApp недоступен (не в Telegram)
-    // 3. Пользователь не закрыл предупреждение
-    const shouldShow = isReady && !webApp && !isDismissed;
+    useEffect(() => {
+        // Проверяем наличие Telegram WebApp напрямую
+        const hasTelegramWebApp = !!(
+            typeof window !== "undefined" &&
+            window.Telegram?.WebApp?.initDataUnsafe?.user
+        );
+        setIsWebApp(hasTelegramWebApp);
+
+        console.log("WebAppWarning:", {
+            hasTelegramWebApp,
+            isDismissed,
+            shouldShow: !hasTelegramWebApp && !isDismissed
+        });
+    }, [isDismissed]);
 
     const handleClose = () => {
         setIsDismissed(true);
     };
+
+    // Показываем только если НЕ в Telegram WebApp и не закрыто
+    const shouldShow = !isWebApp && !isDismissed;
 
     if (!shouldShow) return null;
 

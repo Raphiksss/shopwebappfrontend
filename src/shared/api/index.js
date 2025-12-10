@@ -69,6 +69,7 @@ export async function request(path, method = "GET", body = null, headers = {}) {
     if (response.status === 204) return null;
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
+
     return response.json();
 }
 
