@@ -195,21 +195,21 @@
     max-width: 280px;
 }
 
-.paymentLink {
-    display: inline-block;
-    padding: 14px 28px;
-    background: var(--blue);
-    color: #fff;
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    border-radius: 12px;
-    transition: all 0.2s;
+.linkContainer {
+    width: 100%;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.paymentLink:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
+.linkText {
+    display: block;
+    color: var(--blue);
+    font-size: 13px;
+    word-break: break-all;
+    user-select: all;
 }
 
 .pendingStatus {

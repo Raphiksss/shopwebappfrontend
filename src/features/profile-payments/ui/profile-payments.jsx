@@ -164,16 +164,11 @@ export const PaymentMethods = () => {
                     <div className={styles.pendingPayment}>
                         <div className={styles.pendingIcon}>💳</div>
                         <p className={styles.pendingText}>
-                            Перейдите по ссылке для оплаты. После оплаты баланс будет пополнен автоматически.
+                            Скопируйте ссылку и перейдите по ней для оплаты. После оплаты баланс будет пополнен автоматически.
                         </p>
-                        <a
-                            href={paymentUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={styles.paymentLink}
-                        >
-                            Перейти к оплате
-                        </a>
+                        <div className={styles.linkContainer}>
+                            <span className={styles.linkText}>{paymentUrl}</span>
+                        </div>
                         <div className={styles.pendingStatus}>
                             <span className={styles.spinner}></span>
                             Ожидание подтверждения платежа...
