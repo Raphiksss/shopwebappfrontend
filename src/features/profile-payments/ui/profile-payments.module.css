@@ -173,3 +173,65 @@
 .optionText {
     font-weight: 500;
 }
+
+.pendingPayment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    padding: 20px 0;
+}
+
+.pendingIcon {
+    font-size: 48px;
+}
+
+.pendingText {
+    margin: 0;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 280px;
+}
+
+.paymentLink {
+    display: inline-block;
+    padding: 14px 28px;
+    background: var(--blue);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.2s;
+}
+
+.paymentLink:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.pendingStatus {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -23,6 +23,7 @@ export const PaymentMethods = () => {
     const [amount, setAmount] = useState("");
     const [isProcessing, setIsProcessing] = useState(false);
     const [processingMethod, setProcessingMethod] = useState(null);
+    const [paymentUrl, setPaymentUrl] = useState(null);
 
     const balance = useMemo(() => {
         if (loading && !user) return "Загрузка...";
@@ -64,7 +65,8 @@ export const PaymentMethods = () => {
                 } else if (method === "card") {
                     const response = await apiPayments.replenishYoomoney(tgId, amount);
                     if (response?.payment_url) {
-                        window.open(response.payment_url, "_blank");
+                        setPaymentUrl(response.payment_url);
+                        setShowPaymentPanel(false);
                     } else {
                         alert("Не удалось получить ссылку на оплату");
                     }
@@ -102,7 +104,7 @@ export const PaymentMethods = () => {
                 </Button>
             </div>
 
-            {showPaymentPanel && (
+            {showPaymentPanel && !paymentUrl && (
                 <div className={styles.paymentPanel}>
                     <div className={styles.panelHeader}>
                         <h4 className={styles.panelTitle}>Выберите способ оплаты</h4>
@@ -144,6 +146,38 @@ export const PaymentMethods = () => {
                                 {processingMethod === 'card' ? "Обработка..." : "Банковская карта"}
                             </span>
                         </button>
+                    </div>
+                </div>
+            )}
+
+            {paymentUrl && (
+                <div className={styles.paymentPanel}>
+                    <div className={styles.panelHeader}>
+                        <h4 className={styles.panelTitle}>Оплата картой</h4>
+                        <button
+                            className={styles.closeButton}
+                            onClick={() => setPaymentUrl(null)}
+                        >
+                            ✕
+                        </button>
+                    </div>
+                    <div className={styles.pendingPayment}>
+                        <div className={styles.pendingIcon}>💳</div>
+                        <p className={styles.pendingText}>
+                            Перейдите по ссылке для оплаты. После оплаты баланс будет пополнен автоматически.
+                        </p>
+                        <a
+                            href={paymentUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.paymentLink}
+                        >
+                            Перейти к оплате
+                        </a>
+                        <div className={styles.pendingStatus}>
+                            <span className={styles.spinner}></span>
+                            Ожидание подтверждения платежа...
+                        </div>
                     </div>
                 </div>
             )}
