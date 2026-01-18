@@ -66,6 +66,7 @@ export async function request(path, method = "GET", body = null, headers = {}) {
     const url = `${API_HOST}${buildPath(path)}`;
     const response = await fetch(url, opts);
 
+
     if (response.status === 204) return null;
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
@@ -130,6 +131,11 @@ export const apiPayments = {
     replenishCrypto: (tgId, amount) =>
         request(
             `/users/replenisment/crypto/?tg_id=${encodeURIComponent(tgId)}&amount=${encodeURIComponent(amount)}`,
+            "POST"
+        ),
+    replenishYoomoney: (tgId, amount) =>
+        request(
+            `/users/replenisment/yoomoney/?tg_id=${encodeURIComponent(tgId)}&amount=${encodeURIComponent(amount)}`,
             "POST"
         ),
 };

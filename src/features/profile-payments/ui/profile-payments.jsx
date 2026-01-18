@@ -41,7 +41,7 @@ export const PaymentMethods = () => {
     };
 
     const handlePaymentMethodClick = async (method) => {
-        if (method === "telegram-stars" || method === "crypto") {
+        if (method === "telegram-stars" || method === "crypto" || method === "card") {
             if (!amount || Number(amount) <= 0) {
                 alert("Пожалуйста, введите корректную сумму");
                 return;
@@ -57,18 +57,26 @@ export const PaymentMethods = () => {
             try {
                 if (method === "telegram-stars") {
                     await apiPayments.replenishStars(tgId, amount);
+                    closeApp();
                 } else if (method === "crypto") {
                     await apiPayments.replenishCrypto(tgId, amount);
+                    closeApp();
+                } else if (method === "card") {
+                    const response = await apiPayments.replenishYoomoney(tgId, amount);
+                    if (response?.payment_url) {
+                        window.open(response.payment_url, "_blank");
+                    } else {
+                        alert("Не удалось получить ссылку на оплату");
+                    }
+                    setIsProcessing(false);
+                    setProcessingMethod(null);
                 }
-                closeApp();
             } catch (error) {
                 console.error("Payment error:", error);
                 alert("Ошибка при отправке запроса на пополнение");
                 setIsProcessing(false);
                 setProcessingMethod(null);
             }
-        } else if (method === "card") {
-            alert("Способ оплаты недоступен");
         } else {
             console.log(`Selected payment method: ${method}`);
         }
@@ -132,7 +140,9 @@ export const PaymentMethods = () => {
                             disabled={isProcessing}
                         >
                             <span className={styles.optionIcon}>💳</span>
-                            <span className={styles.optionText}>Банковская карта</span>
+                            <span className={styles.optionText}>
+                                {processingMethod === 'card' ? "Обработка..." : "Банковская карта"}
+                            </span>
                         </button>
                     </div>
                 </div>
