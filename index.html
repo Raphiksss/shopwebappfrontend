@@ -8,16 +8,57 @@
   </head>
   <body>
     <script>
-      // Глобальная защита от крашей (Xiaomi WebView fix)
-      window.onerror = function(msg, url, line, col, error) {
-        console.error('Global error:', msg, url, line, col, error);
-        return true;
-      };
-      window.onunhandledrejection = function(event) {
-        console.error('Unhandled promise rejection:', event.reason);
-        event.preventDefault();
-        return true;
-      };
+      (function() {
+        // Xiaomi/MIUI WebView crash protection
+
+        // 1. Global error handler
+        window.onerror = function(msg, url, line, col, error) {
+          console.error('Error:', msg);
+          return true;
+        };
+
+        // 2. Promise rejection handler
+        window.onunhandledrejection = function(e) {
+          e.preventDefault();
+          return true;
+        };
+
+        // 3. ResizeObserver fix (частая причина крашей)
+        var RO = window.ResizeObserver;
+        if (RO) {
+          window.ResizeObserver = function(callback) {
+            return new RO(function(entries, observer) {
+              try {
+                callback(entries, observer);
+              } catch (e) {
+                console.error('ResizeObserver error:', e);
+              }
+            });
+          };
+          window.ResizeObserver.prototype = RO.prototype;
+        }
+
+        // 4. Touch/scroll event protection
+        var origAddEventListener = EventTarget.prototype.addEventListener;
+        EventTarget.prototype.addEventListener = function(type, fn, options) {
+          var safeOptions = options;
+          if (type === 'touchstart' || type === 'touchmove' || type === 'wheel' || type === 'scroll') {
+            if (typeof options === 'boolean') {
+              safeOptions = { capture: options, passive: true };
+            } else if (typeof options === 'object' || options === undefined) {
+              safeOptions = Object.assign({}, options, { passive: true });
+            }
+          }
+          var safeFn = function(e) {
+            try {
+              return fn.call(this, e);
+            } catch (err) {
+              console.error('Event error:', err);
+            }
+          };
+          return origAddEventListener.call(this, type, safeFn, safeOptions);
+        };
+      })();
     </script>
     <div id="root"></div>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
