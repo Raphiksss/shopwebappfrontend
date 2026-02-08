@@ -45,8 +45,18 @@ function buildPath(path) {
 }
 
 
+function getCsrfToken() {
+    const match = document.cookie.match(/(?:^|;\s*)csrftoken=([^\s;]+)/);
+    return match ? match[1] : null;
+}
+
 export async function request(path, method = "GET", body = null, headers = {}) {
-    const opts = { method, headers };
+    const opts = { method, headers, credentials: "include" };
+
+    const csrf = getCsrfToken();
+    if (csrf && method !== "GET") {
+        opts.headers["X-CSRFToken"] = csrf;
+    }
 
     if (body && !(body instanceof FormData)) {
         const hasContentType =
@@ -138,4 +148,10 @@ export const apiPayments = {
             `/users/replenisment/yoomoney/?tg_id=${encodeURIComponent(tgId)}&amount=${encodeURIComponent(amount)}`,
             "POST"
         ),
+};
+
+export const apiAuth = {
+    login: (username, password) =>
+        request("/auth/login/", "POST", { username, password }),
+    me: () => request("/auth/me/"),
 };

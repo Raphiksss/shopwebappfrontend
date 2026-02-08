@@ -1,14 +1,18 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 
 import { Button } from "../../../shared/assets/Button/Button";
 import { useAuthStore } from "../../../features/auth/model/useAuthStore";
 
-import { useGoToCatalog } from "../../../shared/lib/goToCatalog";
-
 import styles from "./AdminLayout.module.css";
 
 export const AdminLayout = ({ userStaff }) => {
-    const goToCatalog = useGoToCatalog();
+    const navigate = useNavigate();
+    const logout = useAuthStore((s) => s.logout);
+
+    const handleLogout = () => {
+        logout();
+        navigate("/catalog");
+    };
 
     return (
         <div className={styles.layout}>
@@ -47,7 +51,7 @@ export const AdminLayout = ({ userStaff }) => {
                 <Outlet />
             </main>
             <div className={styles.user}>
-                <Button onClick={goToCatalog} size="small">
+                <Button onClick={handleLogout} size="small">
                     Выйти
                 </Button>
             </div>

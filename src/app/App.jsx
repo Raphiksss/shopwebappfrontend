@@ -9,9 +9,6 @@ import { ProductPage } from "../pages/ProductPage";
 import AdminPanel from "../pages/AdminPanel";
 import { WebAppWarning } from "../shared/ui/WebAppWarning/WebAppWarning";
 
-// import { RequireRole } from "../features/auth/ui/RequireRole";
-// import { useAuthStore } from "../features/auth/model/useAuthStore";
-
 import styles from "./App.module.css";
 
 function App() {
@@ -29,7 +26,7 @@ function App() {
 
                         <Route
                             path="/admin/*"
-                            element={<AdminPanel userStaff="admin" />}
+                            element={<AdminPanel />}
                         >
                             <Route
                                 index

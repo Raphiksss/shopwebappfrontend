@@ -1,1 +1,1 @@
-export { AdminLayout as default } from "./ui/AdminLayout";
+export { AdminGate as default } from "./ui/AdminGate";
