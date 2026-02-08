@@ -45,18 +45,8 @@ function buildPath(path) {
 }
 
 
-function getCsrfToken() {
-    const match = document.cookie.match(/(?:^|;\s*)csrftoken=([^\s;]+)/);
-    return match ? match[1] : null;
-}
-
 export async function request(path, method = "GET", body = null, headers = {}) {
-    const opts = { method, headers, credentials: "include" };
-
-    const csrf = getCsrfToken();
-    if (csrf && method !== "GET") {
-        opts.headers["X-CSRFToken"] = csrf;
-    }
+    const opts = { method, headers };
 
     if (body && !(body instanceof FormData)) {
         const hasContentType =
