@@ -7,6 +7,7 @@ import { ProfilePage } from "../pages/ProfilePage";
 import { BottomNav } from "../widgets/BottomNav/BottomNav";
 import { ProductPage } from "../pages/ProductPage";
 import AdminPanel from "../pages/AdminPanel";
+import { AdminCatalog } from "../pages/AdminPanel/ui/AdminCatalog";
 import { WebAppWarning } from "../shared/ui/WebAppWarning/WebAppWarning";
 
 import styles from "./App.module.css";
@@ -30,10 +31,10 @@ function App() {
                         >
                             <Route
                                 index
-                                element={<Navigate to="orders" replace />}
+                                element={<Navigate to="catalog" replace />}
                             />
                             <Route path="orders" element={<Orders />} />
-                            <Route path="catalog" element={<Catalog />} />
+                            <Route path="catalog" element={<AdminCatalog />} />
                             <Route path="customers" element={<Customers />} />
                         </Route>
                     </Routes>
@@ -48,5 +49,4 @@ function App() {
 
 export default App;
 export const Orders = () => <h2>Список заказов</h2>;
-export const Catalog = () => <h2>Каталог товаров</h2>;
 export const Customers = () => <h2>Список клиентов</h2>;

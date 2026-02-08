@@ -1,0 +1,138 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.formTitle {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--solid);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.input:focus {
+    border-color: var(--blue);
+}
+
+.input::placeholder {
+    color: var(--muted);
+}
+
+.textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--solid);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+    resize: vertical;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+}
+
+.textarea:focus {
+    border-color: var(--blue);
+}
+
+.textarea::placeholder {
+    color: var(--muted);
+}
+
+.label {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.categorySection {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.categoryList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.catBtn {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--solid);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.catBtn:hover {
+    border-color: var(--blue);
+}
+
+.catActive {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--blue);
+    background: rgba(255, 46, 99, 0.15);
+    color: var(--blue);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.fileSection {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.fileInput {
+    font-size: 13px;
+    color: var(--text);
+}
+
+.fileInput::file-selector-button {
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--solid);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.error {
+    color: #ff4d4d;
+    font-size: 13px;
+    padding: 8px;
+    border-radius: 8px;
+    background: rgba(255, 77, 77, 0.1);
+}
+
+.success {
+    color: #4dff7c;
+    font-size: 13px;
+    padding: 8px;
+    border-radius: 8px;
+    background: rgba(77, 255, 124, 0.1);
+}

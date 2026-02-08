@@ -78,6 +78,8 @@ export async function request(path, method = "GET", body = null, headers = {}, {
     return response.json();
 }
 
+const withCreds = { credentials: "include" };
+
 export const apiProducts = {
     list: (params) => {
         const category =
@@ -92,8 +94,8 @@ export const apiProducts = {
         return request("/products/");
     },
     byId: (id) => request(`/products/${id}/`),
-    create: (formData) => request("/products/", "POST", formData),
-    delete: (id) => request(`/products/${id}/`, "DELETE"),
+    create: (formData) => request("/products/", "POST", formData, {}, withCreds),
+    delete: (id) => request(`/products/${id}/`, "DELETE", null, {}, withCreds),
 };
 
 export const apiCategories = {
@@ -143,8 +145,6 @@ export const apiPayments = {
             "POST"
         ),
 };
-
-const withCreds = { credentials: "include" };
 
 export const apiAuth = {
     login: (username, password) =>
