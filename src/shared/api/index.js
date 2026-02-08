@@ -45,8 +45,12 @@ function buildPath(path) {
 }
 
 
-export async function request(path, method = "GET", body = null, headers = {}) {
+export async function request(path, method = "GET", body = null, headers = {}, { credentials } = {}) {
     const opts = { method, headers };
+
+    if (credentials) {
+        opts.credentials = credentials;
+    }
 
     if (body && !(body instanceof FormData)) {
         const hasContentType =
@@ -140,8 +144,10 @@ export const apiPayments = {
         ),
 };
 
+const withCreds = { credentials: "include" };
+
 export const apiAuth = {
     login: (username, password) =>
-        request("/auth/login/", "POST", { username, password }),
-    me: () => request("/auth/me/"),
+        request("/auth/login/", "POST", { username, password }, {}, withCreds),
+    me: () => request("/auth/me/", "GET", null, {}, withCreds),
 };
