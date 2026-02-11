@@ -126,9 +126,11 @@ export const AdminCatalog = () => {
     return (
         <div>
             {!showForm && (
-                <Button onClick={() => setShowForm(true)}>
-                    Добавить товар
-                </Button>
+                <div className={styles.addBtnWrap}>
+                    <Button onClick={() => setShowForm(true)} className={styles.addBtn}>
+                        Добавить товар
+                    </Button>
+                </div>
             )}
 
             {showForm && (

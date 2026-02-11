@@ -137,6 +137,17 @@
     background: rgba(77, 255, 124, 0.1);
 }
 
+.addBtnWrap {
+    display: flex;
+    justify-content: center;
+}
+
+.addBtn {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 16px;
+}
+
 .muted {
     color: var(--muted);
     font-size: 13px;
