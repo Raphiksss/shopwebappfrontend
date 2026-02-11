@@ -1,7 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { apiProducts, apiCategories } from "../../../shared/api";
 import { Button } from "../../../shared/assets/Button/Button";
 import styles from "./AdminCatalog.module.css";
+
+const PRODUCT_TYPES = [
+    { value: "instantly", label: "instantly" },
+    { value: "notinstantly", label: "notinstantly" },
+];
 
 export const AdminCatalog = () => {
     const [showForm, setShowForm] = useState(false);
@@ -10,16 +15,36 @@ export const AdminCatalog = () => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
 
+    const [products, setProducts] = useState([]);
+    const [productsLoading, setProductsLoading] = useState(false);
+    const [deletingId, setDeletingId] = useState(null);
+
     const [form, setForm] = useState({
         title: "",
         description: "",
         price: "",
         rating: "",
         category: "",
-        product_type: "",
+        product_type: "instantly",
         img: null,
         data: null,
     });
+
+    const loadProducts = useCallback(async () => {
+        setProductsLoading(true);
+        try {
+            const data = await apiProducts.list();
+            setProducts(Array.isArray(data) ? data : []);
+        } catch {
+            setProducts([]);
+        } finally {
+            setProductsLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        loadProducts();
+    }, [loadProducts]);
 
     useEffect(() => {
         if (showForm) {
@@ -38,7 +63,7 @@ export const AdminCatalog = () => {
             price: "",
             rating: "",
             category: "",
-            product_type: "",
+            product_type: "instantly",
             img: null,
             data: null,
         });
@@ -68,10 +93,23 @@ export const AdminCatalog = () => {
             await apiProducts.create(fd);
             setSuccess(true);
             resetForm();
+            loadProducts();
         } catch {
             setError("Не удалось создать товар");
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        setDeletingId(id);
+        try {
+            await apiProducts.delete(id);
+            setProducts((prev) => prev.filter((p) => p.id !== id));
+        } catch {
+            // ignore
+        } finally {
+            setDeletingId(null);
         }
     };
 
@@ -159,15 +197,27 @@ export const AdminCatalog = () => {
                         </div>
                     </div>
 
-                    <input
-                        className={styles.input}
-                        type="text"
-                        placeholder="Тип товара"
-                        value={form.product_type}
-                        onChange={(e) =>
-                            updateField("product_type", e.target.value)
-                        }
-                    />
+                    <div className={styles.categorySection}>
+                        <span className={styles.label}>Тип товара</span>
+                        <div className={styles.categoryList}>
+                            {PRODUCT_TYPES.map((pt) => (
+                                <button
+                                    type="button"
+                                    key={pt.value}
+                                    className={
+                                        form.product_type === pt.value
+                                            ? styles.catActive
+                                            : styles.catBtn
+                                    }
+                                    onClick={() =>
+                                        updateField("product_type", pt.value)
+                                    }
+                                >
+                                    {pt.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
 
                     <div className={styles.fileSection}>
                         <span className={styles.label}>
@@ -214,6 +264,42 @@ export const AdminCatalog = () => {
                     </div>
                 </form>
             )}
+
+            <div className={styles.productList}>
+                <h3 className={styles.formTitle}>Все товары</h3>
+                {productsLoading && (
+                    <div className={styles.muted}>Загрузка...</div>
+                )}
+                {!productsLoading && products.length === 0 && (
+                    <div className={styles.muted}>Товаров нет</div>
+                )}
+                {products.map((p) => (
+                    <div key={p.id} className={styles.productItem}>
+                        {p.img && (
+                            <img
+                                src={p.img}
+                                alt={p.title}
+                                className={styles.productImg}
+                            />
+                        )}
+                        <div className={styles.productInfo}>
+                            <span className={styles.productTitle}>
+                                {p.title}
+                            </span>
+                            <span className={styles.productPrice}>
+                                {p.price} ₽
+                            </span>
+                        </div>
+                        <button
+                            className={styles.deleteBtn}
+                            disabled={deletingId === p.id}
+                            onClick={() => handleDelete(p.id)}
+                        >
+                            {deletingId === p.id ? "..." : "Удалить"}
+                        </button>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
