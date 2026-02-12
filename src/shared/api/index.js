@@ -95,6 +95,7 @@ export const apiProducts = {
     },
     byId: (id) => request(`/products/${id}/`),
     create: (formData) => request("/products/", "POST", formData, {}, withCreds),
+    update: (id, data) => request(`/products/${id}/`, "PATCH", data, {}, withCreds),
     delete: (id) => request(`/products/${id}/`, "DELETE", null, {}, withCreds),
 };
 

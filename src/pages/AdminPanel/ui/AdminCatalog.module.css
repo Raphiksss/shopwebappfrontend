@@ -199,6 +199,32 @@
     color: var(--muted);
 }
 
+.productActions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.editBtn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.editBtn:hover {
+    background: rgba(59, 130, 246, 0.25);
+}
+
 .deleteBtn {
     padding: 5px 12px;
     border-radius: 8px;
@@ -207,7 +233,6 @@
     color: #ff4d4d;
     font-size: 12px;
     cursor: pointer;
-    flex-shrink: 0;
     transition: background 0.2s ease;
 }
 
@@ -217,5 +242,71 @@
 
 .deleteBtn:disabled {
     opacity: 0.5;
+    cursor: default;
+}
+
+.editPanel {
+    padding: 12px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    background: var(--surface-elevated);
+    border: 1px solid var(--solid);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.editTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.editFieldRow {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.editLabel {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.editFieldInner {
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+}
+
+.editFieldInner .input,
+.editFieldInner .textarea {
+    flex: 1;
+    min-width: 0;
+}
+
+.checkBtn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid rgba(77, 255, 124, 0.4);
+    background: rgba(77, 255, 124, 0.1);
+    color: #4dff7c;
+    font-size: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.checkBtn:hover {
+    background: rgba(77, 255, 124, 0.25);
+}
+
+.checkBtn:disabled {
+    opacity: 0.3;
     cursor: default;
 }
