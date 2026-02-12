@@ -84,7 +84,7 @@ const EditField = ({ field, product, categories, onSave }) => {
                         disabled={!canSave || saving}
                         onClick={handleSave}
                     >
-                        {done ? "done" : saving ? "..." : "\u2713"}
+                        {done ? "done" : saving ? <span className={styles.spin}>&#9881;</span> : "\u2713"}
                     </button>
                 </div>
             </div>
@@ -117,7 +117,7 @@ const EditField = ({ field, product, categories, onSave }) => {
                         disabled={!canSave || saving}
                         onClick={handleSave}
                     >
-                        {done ? "done" : saving ? "..." : "\u2713"}
+                        {done ? "done" : saving ? <span className={styles.spin}>&#9881;</span> : "\u2713"}
                     </button>
                 </div>
             </div>
@@ -140,7 +140,7 @@ const EditField = ({ field, product, categories, onSave }) => {
                         disabled={!canSave || saving}
                         onClick={handleSave}
                     >
-                        {done ? "done" : saving ? "..." : "\u2713"}
+                        {done ? "done" : saving ? <span className={styles.spin}>&#9881;</span> : "\u2713"}
                     </button>
                 </div>
             </div>
@@ -163,7 +163,7 @@ const EditField = ({ field, product, categories, onSave }) => {
                         disabled={!canSave || saving}
                         onClick={handleSave}
                     >
-                        {done ? "done" : saving ? "..." : "\u2713"}
+                        {done ? "done" : saving ? <span className={styles.spin}>&#9881;</span> : "\u2713"}
                     </button>
                 </div>
             </div>
@@ -186,7 +186,7 @@ const EditField = ({ field, product, categories, onSave }) => {
                     disabled={!canSave || saving}
                     onClick={handleSave}
                 >
-                    {done ? "done" : saving ? "..." : "\u2713"}
+                    {done ? "done" : saving ? <span className={styles.spin}>&#9881;</span> : "\u2713"}
                 </button>
             </div>
         </div>
