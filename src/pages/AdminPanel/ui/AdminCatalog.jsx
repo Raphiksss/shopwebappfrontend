@@ -35,13 +35,13 @@ const EditField = ({ field, product, categories, onSave }) => {
         setSaving(true);
         setDone(false);
         try {
+            const fd = new FormData();
             if (field.type === "file") {
-                const fd = new FormData();
                 fd.append(field.key, file);
-                await apiProducts.update(product.id, fd);
             } else {
-                await apiProducts.update(product.id, { [field.key]: value });
+                fd.append(field.key, value);
             }
+            await apiProducts.update(product.id, fd);
             setDone(true);
             onSave();
             setTimeout(() => setDone(false), 1500);
