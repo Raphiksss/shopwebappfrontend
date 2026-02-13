@@ -106,11 +106,11 @@ export const apiCategories = {
 export const apiUsers = {
     getByTgId: (tgId) => request(`/users/${tgId}/`),
     create: (payload) => request("/create_user/", "POST", payload),
-    favorites: (tgId) => request(`/favorites/${tgId}/`),
-    favAdd: (tgId, prodId) =>
-        request(`/favorites/${tgId}/?product_id=${prodId}`, "POST"),
-    favDelete: (tgId, prodId) =>
-        request(`/favorites/${tgId}/?product_id=${prodId}`, "DELETE"),
+    favorites: (userId) => request(`/favorites/${userId}/`),
+    favAdd: (userId, prodId) =>
+        request(`/favorites/${userId}/?product_id=${prodId}`, "POST"),
+    favDelete: (userId, prodId) =>
+        request(`/favorites/${userId}/?product_id=${prodId}`, "DELETE"),
 };
 
 export const apiCart = {
