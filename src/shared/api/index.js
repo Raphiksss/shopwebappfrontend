@@ -150,7 +150,7 @@ export const apiPayments = {
 export const apiAuth = {
     login: (username, password) => {
         const formData = new FormData();
-        formData.append('username', username);
+        formData.append('login', username);
         formData.append('password', password);
 
         return request("/auth/login/", "POST", formData, {}, withCreds);},
