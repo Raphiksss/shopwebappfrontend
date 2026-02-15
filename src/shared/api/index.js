@@ -148,7 +148,11 @@ export const apiPayments = {
 };
 
 export const apiAuth = {
-    login: (username, password) =>
-        request("/auth/login/", "POST", { username, password }, {}, withCreds),
+    login: (username, password) => {
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('password', password);
+
+        return request("/auth/login/", "POST", formData, {}, withCreds);},
     me: () => request("/auth/me/", "GET", null, {}, withCreds),
 };
