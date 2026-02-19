@@ -1,0 +1,177 @@
+.filterRow {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.filterBtn {
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--solid);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.filterBtn:hover {
+    border-color: var(--blue);
+}
+
+.filterActive {
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--blue);
+    background: rgba(255, 46, 99, 0.15);
+    color: var(--blue);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.orderList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.orderCard {
+    padding: 12px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--solid);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.orderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.orderId {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.statusBadge {
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.statusPending {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.statusDone {
+    background: rgba(77, 255, 124, 0.1);
+    color: #4dff7c;
+    border: 1px solid rgba(77, 255, 124, 0.3);
+}
+
+.statusDeclined {
+    background: rgba(255, 77, 77, 0.1);
+    color: #ff4d4d;
+    border: 1px solid rgba(255, 77, 77, 0.3);
+}
+
+.orderInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.infoRow {
+    display: flex;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text);
+}
+
+.infoLabel {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.itemsList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+}
+
+.itemChip {
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--solid);
+    color: var(--text);
+    font-size: 12px;
+}
+
+.statusActions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.statusBtns {
+    display: flex;
+    gap: 6px;
+}
+
+.statusBtn {
+    padding: 5px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--solid);
+    background: var(--surface-elevated);
+    color: var(--text);
+    font-size: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.statusBtn:hover {
+    border-color: var(--blue);
+}
+
+.statusBtn:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.statusBtnActive {
+    padding: 5px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--blue);
+    background: rgba(255, 46, 99, 0.15);
+    color: var(--blue);
+    font-size: 12px;
+    cursor: default;
+    opacity: 0.5;
+}
+
+.spin {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

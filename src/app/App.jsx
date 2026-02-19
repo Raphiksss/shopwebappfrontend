@@ -8,6 +8,7 @@ import { BottomNav } from "../widgets/BottomNav/BottomNav";
 import { ProductPage } from "../pages/ProductPage";
 import AdminPanel from "../pages/AdminPanel";
 import { AdminCatalog } from "../pages/AdminPanel/ui/AdminCatalog";
+import { AdminOrders } from "../pages/AdminPanel/ui/AdminOrders";
 import { WebAppWarning } from "../shared/ui/WebAppWarning/WebAppWarning";
 
 import styles from "./App.module.css";
@@ -33,7 +34,7 @@ function App() {
                                 index
                                 element={<Navigate to="catalog" replace />}
                             />
-                            <Route path="orders" element={<Orders />} />
+                            <Route path="orders" element={<AdminOrders />} />
                             <Route path="catalog" element={<AdminCatalog />} />
                             <Route path="customers" element={<Customers />} />
                         </Route>
@@ -48,5 +49,4 @@ function App() {
 }
 
 export default App;
-export const Orders = () => <h2>Список заказов</h2>;
 export const Customers = () => <h2>Список клиентов</h2>;

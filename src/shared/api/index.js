@@ -127,6 +127,14 @@ export const apiCart = {
 export const apiOrders = {
     create: (tgId) =>
         request(`/orders/?tg_id=${encodeURIComponent(tgId)}`, "POST"),
+    list: (status) => {
+        if (status) {
+            return request(`/orders/${encodeURIComponent(status)}/`, "GET", null, {}, withCreds);
+        }
+        return request("/orders/", "GET", null, {}, withCreds);
+    },
+    updateStatus: (orderId, status) =>
+        request(`/orders/${orderId}/`, "PATCH", { status }, {}, withCreds),
 };
 
 export const apiPayments = {
