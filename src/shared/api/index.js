@@ -129,7 +129,7 @@ export const apiOrders = {
         request(`/orders/?tg_id=${encodeURIComponent(tgId)}`, "POST"),
     list: (status) => {
         if (status) {
-            return request(`/orders/${encodeURIComponent(status)}/`, "GET", null, {}, withCreds);
+            return request(`/orders/?status=${encodeURIComponent(status)}`, "GET", null, {}, withCreds);
         }
         return request("/orders/", "GET", null, {}, withCreds);
     },
