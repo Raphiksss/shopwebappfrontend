@@ -3,10 +3,10 @@ import { apiOrders, apiUsers, apiProducts } from "../../../shared/api";
 import styles from "./AdminOrders.module.css";
 
 const STATUSES = [
-    { value: "", label: "Все" },
-    { value: "pending", label: "Pending" },
-    { value: "done", label: "Done" },
-    { value: "declined", label: "Declined" },
+    { value: "", label: "все" },
+    { value: "pending", label: "pending" },
+    { value: "done", label: "done" },
+    { value: "declined", label: "declined" },
 ];
 
 const STATUS_CLASSES = {
