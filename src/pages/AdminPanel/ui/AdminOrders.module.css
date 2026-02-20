@@ -196,6 +196,30 @@
     animation: spin 1s linear infinite;
 }
 
+.loadMoreBtn {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--solid);
+    background: var(--surface);
+    color: var(--blue);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.loadMoreBtn:hover {
+    border-color: var(--blue);
+}
+
+.loadMoreBtn:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
 @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }

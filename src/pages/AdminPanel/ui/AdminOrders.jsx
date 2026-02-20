@@ -1,6 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { apiOrders } from "../../../shared/api";
 import styles from "./AdminOrders.module.css";
+
+const PAGE_SIZE = 20;
 
 const STATUSES = [
     { value: "", label: "все" },
@@ -106,23 +108,52 @@ const OrderItem = ({ order, onStatusChange }) => {
 export const AdminOrders = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [loadingMore, setLoadingMore] = useState(false);
     const [filter, setFilter] = useState("");
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(false);
+    const pageRef = useRef(1);
 
-    const loadOrders = useCallback(async () => {
-        setLoading(true);
+    const loadOrders = useCallback(async (pageNum = 1, append = false) => {
+        if (append) {
+            setLoadingMore(true);
+        } else {
+            setLoading(true);
+        }
         try {
-            const data = await apiOrders.list(filter || null);
-            setOrders(Array.isArray(data) ? data : []);
+            const data = await apiOrders.list(filter || null, pageNum, PAGE_SIZE);
+            const items = Array.isArray(data) ? data : [];
+            setOrders((prev) => append ? [...prev, ...items] : items);
+            setHasMore(items.length >= PAGE_SIZE);
+            pageRef.current = pageNum;
+            setPage(pageNum);
         } catch {
-            setOrders([]);
+            if (!append) setOrders([]);
+            setHasMore(false);
         } finally {
             setLoading(false);
+            setLoadingMore(false);
         }
     }, [filter]);
 
     useEffect(() => {
-        loadOrders();
+        setPage(1);
+        pageRef.current = 1;
+        loadOrders(1, false);
     }, [loadOrders]);
+
+    const handleLoadMore = () => {
+        const next = pageRef.current + 1;
+        loadOrders(next, true);
+    };
+
+    const handleStatusChange = () => {
+        loadOrders(1, false);
+    };
+
+    const handleFilterChange = (value) => {
+        setFilter(value);
+    };
 
     return (
         <div>
@@ -135,7 +166,7 @@ export const AdminOrders = () => {
                                 ? styles.filterActive
                                 : styles.filterBtn
                         }
-                        onClick={() => setFilter(s.value)}
+                        onClick={() => handleFilterChange(s.value)}
                     >
                         {s.label}
                     </button>
@@ -153,10 +184,24 @@ export const AdminOrders = () => {
                     <OrderItem
                         key={order.id}
                         order={order}
-                        onStatusChange={loadOrders}
+                        onStatusChange={handleStatusChange}
                     />
                 ))}
             </div>
+
+            {hasMore && !loading && (
+                <button
+                    className={styles.loadMoreBtn}
+                    onClick={handleLoadMore}
+                    disabled={loadingMore}
+                >
+                    {loadingMore ? (
+                        <span className={styles.spin}>&#9881;</span>
+                    ) : (
+                        "Загрузить ещё"
+                    )}
+                </button>
+            )}
         </div>
     );
 };

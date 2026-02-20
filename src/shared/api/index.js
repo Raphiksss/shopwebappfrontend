@@ -127,11 +127,12 @@ export const apiCart = {
 export const apiOrders = {
     create: (tgId) =>
         request(`/orders/?tg_id=${encodeURIComponent(tgId)}`, "POST"),
-    list: (status) => {
-        if (status) {
-            return request(`/orders/?status=${encodeURIComponent(status)}`, "GET", null, {}, withCreds);
-        }
-        return request("/orders/", "GET", null, {}, withCreds);
+    list: (status, page = 1, limit = 20) => {
+        const params = new URLSearchParams();
+        if (status) params.set("status", status);
+        params.set("page", String(page));
+        params.set("limit", String(limit));
+        return request(`/orders/?${params.toString()}`, "GET", null, {}, withCreds);
     },
     updateStatus: (orderId, status) =>
         request(`/orders/${orderId}/`, "PATCH", { status }, {}, withCreds),
