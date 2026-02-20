@@ -53,6 +53,14 @@ export const AdminLayout = ({ userStaff }) => {
                 >
                     Пользователи
                 </NavLink>
+                <NavLink
+                    to="design"
+                    className={({ isActive }) =>
+                        isActive ? styles.active : styles.link
+                    }
+                >
+                    Дизайн
+                </NavLink>
             </nav>
 
             <main className={styles.outlet}>
