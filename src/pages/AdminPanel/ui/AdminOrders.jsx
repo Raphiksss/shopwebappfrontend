@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { apiOrders, apiUsers, apiProducts } from "../../../shared/api";
+import { apiOrders } from "../../../shared/api";
 import styles from "./AdminOrders.module.css";
 
 const STATUSES = [
@@ -16,40 +16,10 @@ const STATUS_CLASSES = {
 };
 
 const OrderItem = ({ order, onStatusChange }) => {
-    const [userName, setUserName] = useState(null);
-    const [productNames, setProductNames] = useState({});
     const [changingTo, setChangingTo] = useState(null);
 
-    useEffect(() => {
-        if (order.user) {
-            apiUsers
-                .getByTgId(order.user)
-                .then((u) => setUserName(u?.name || u?.username || `#${order.user}`))
-                .catch(() => setUserName(`#${order.user}`));
-        }
-    }, [order.user]);
-
-    useEffect(() => {
-        if (!order.items?.length) return;
-        order.items.forEach((item) => {
-            if (!productNames[item.product_id]) {
-                apiProducts
-                    .byId(item.product_id)
-                    .then((p) =>
-                        setProductNames((prev) => ({
-                            ...prev,
-                            [item.product_id]: p?.title || `#${item.product_id}`,
-                        }))
-                    )
-                    .catch(() =>
-                        setProductNames((prev) => ({
-                            ...prev,
-                            [item.product_id]: `#${item.product_id}`,
-                        }))
-                    );
-            }
-        });
-    }, [order.items]);
+    const user = order.user_rel;
+    const userName = user?.username || user?.name || `#${user?.tg_id || "?"}`;
 
     const handleStatus = async (newStatus) => {
         setChangingTo(newStatus);
@@ -75,7 +45,7 @@ const OrderItem = ({ order, onStatusChange }) => {
             <div className={styles.orderInfo}>
                 <div className={styles.infoRow}>
                     <span className={styles.infoLabel}>Пользователь:</span>
-                    <span>{userName ?? "..."}</span>
+                    <span>{userName}</span>
                 </div>
                 <div className={styles.infoRow}>
                     <span className={styles.infoLabel}>Сумма:</span>
@@ -87,9 +57,21 @@ const OrderItem = ({ order, onStatusChange }) => {
                 <div className={styles.itemsList}>
                     <span className={styles.infoLabel}>Товары:</span>
                     {order.items.map((item) => (
-                        <span key={item.id} className={styles.itemChip}>
-                            {productNames[item.product_id] || `#${item.product_id}`}
-                        </span>
+                        <div key={item.id} className={styles.itemCard}>
+                            {item.product_rel?.image && (
+                                <img
+                                    src={item.product_rel.image}
+                                    alt={item.product_rel.title}
+                                    className={styles.itemImg}
+                                />
+                            )}
+                            <span className={styles.itemTitle}>
+                                {item.product_rel?.title || `#${item.product_id}`}
+                            </span>
+                            <span className={styles.itemPrice}>
+                                {item.product_rel?.price} ₽
+                            </span>
+                        </div>
                     ))}
                 </div>
             )}
