@@ -1,51 +1,70 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from "./AdminDesign.module.css";
 
+function hexToRgb(hex) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return { r, g, b };
+}
+
+function lighten(hex, amount = 30) {
+    const { r, g, b } = hexToRgb(hex);
+    const lr = Math.min(255, r + amount);
+    const lg = Math.min(255, g + amount);
+    const lb = Math.min(255, b + amount);
+    return `#${lr.toString(16).padStart(2, "0")}${lg.toString(16).padStart(2, "0")}${lb.toString(16).padStart(2, "0")}`;
+}
+
 const COLORS = [
-    { name: "Красный", value: "#ff2e63", glow: "rgba(255, 46, 99, 0.4)" },
-    { name: "Синий", value: "#3b82f6", glow: "rgba(59, 130, 246, 0.4)" },
-    { name: "Фиолетовый", value: "#8b5cf6", glow: "rgba(139, 92, 246, 0.4)" },
-    { name: "Зелёный", value: "#10b981", glow: "rgba(16, 185, 129, 0.4)" },
-    { name: "Оранжевый", value: "#f97316", glow: "rgba(249, 115, 22, 0.4)" },
-    { name: "Розовый", value: "#ec4899", glow: "rgba(236, 72, 153, 0.4)" },
-    { name: "Голубой", value: "#06b6d4", glow: "rgba(6, 182, 212, 0.4)" },
-    { name: "Жёлтый", value: "#eab308", glow: "rgba(234, 179, 8, 0.4)" },
+    { name: "Красный", value: "#ff2e63" },
+    { name: "Синий", value: "#3b82f6" },
+    { name: "Фиолетовый", value: "#8b5cf6" },
+    { name: "Зелёный", value: "#10b981" },
+    { name: "Оранжевый", value: "#f97316" },
+    { name: "Розовый", value: "#ec4899" },
+    { name: "Голубой", value: "#06b6d4" },
+    { name: "Жёлтый", value: "#eab308" },
 ];
 
 const STORAGE_KEY = "app-accent-color";
 
-function applyColor(color) {
+const OPACITIES = [8, 10, 12, 15, 20, 25, 28, 30, 35, 40, 45, 50, 60, 70];
+
+function applyColor(hex) {
+    const { r, g, b } = hexToRgb(hex);
+    const secondary = lighten(hex, 30);
     const root = document.documentElement;
-    root.style.setProperty("--blue", color.value);
-    root.style.setProperty("--glow", color.glow);
+
+    root.style.setProperty("--blue", hex);
+    root.style.setProperty("--blue-secondary", secondary);
+    root.style.setProperty("--glow", `rgba(${r}, ${g}, ${b}, 0.4)`);
+
+    for (const op of OPACITIES) {
+        root.style.setProperty(`--glow-${op.toString().padStart(2, "0")}`, `rgba(${r}, ${g}, ${b}, ${op / 100})`);
+    }
 }
 
-function getSavedColor() {
+function getSavedHex() {
     try {
         const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-            const parsed = JSON.parse(saved);
-            return COLORS.find((c) => c.value === parsed.value) || null;
-        }
+        if (saved) return saved;
     } catch {}
     return null;
 }
 
 export function initAccentColor() {
-    const saved = getSavedColor();
-    if (saved) applyColor(saved);
+    const hex = getSavedHex();
+    if (hex) applyColor(hex);
 }
 
 export const AdminDesign = () => {
-    const [active, setActive] = useState(() => {
-        const saved = getSavedColor();
-        return saved?.value || COLORS[0].value;
-    });
+    const [active, setActive] = useState(() => getSavedHex() || COLORS[0].value);
 
-    const handlePick = (color) => {
-        setActive(color.value);
-        applyColor(color);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(color));
+    const handlePick = (hex) => {
+        setActive(hex);
+        applyColor(hex);
+        localStorage.setItem(STORAGE_KEY, hex);
     };
 
     return (
@@ -62,7 +81,7 @@ export const AdminDesign = () => {
                                 ? styles.colorBtnActive
                                 : styles.colorBtn
                         }
-                        onClick={() => handlePick(color)}
+                        onClick={() => handlePick(color.value)}
                     >
                         <span
                             className={styles.swatch}

@@ -38,9 +38,9 @@
 
 .sortPanel button:hover,
 .sortPanel button.active {
-    background: rgba(255, 46, 99, 0.15);
+    background: var(--glow-15);
     color: #fff;
-    border-color: rgba(255, 46, 99, 0.5);
+    border-color: var(--glow-50);
 }
 .sortPanel button:last-child {
     margin-top: 8px;
@@ -50,6 +50,6 @@
 }
 .sortPanel button:last-child:hover {
     background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 46, 99, 0.45);
+    border-color: var(--glow-45);
     color: var(--blue);
 }

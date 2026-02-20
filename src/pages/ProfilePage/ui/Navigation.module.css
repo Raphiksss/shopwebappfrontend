@@ -21,16 +21,16 @@
 }
 
 .navItem:hover {
-    border-color: rgba(255, 46, 99, 0.5);
+    border-color: var(--glow-50);
     color: var(--blue);
 }
 
 .navItem.active {
     font-weight: bold;
-    border: 1px solid rgba(255, 46, 99, 0.7);
+    border: 1px solid var(--glow-70);
     color: var(--blue);
-    box-shadow: 0 12px 26px rgba(255, 46, 99, 0.25);
-    background: rgba(255, 46, 99, 0.12);
+    box-shadow: 0 12px 26px var(--glow-25);
+    background: var(--glow-12);
 }
 
 .icon {

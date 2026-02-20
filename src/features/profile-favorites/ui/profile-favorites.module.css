@@ -88,7 +88,7 @@
 }
 
 .button:hover {
-    border-color: rgba(255, 46, 99, 0.6);
+    border-color: var(--glow-60);
     transform: translateY(-1px);
 }
 

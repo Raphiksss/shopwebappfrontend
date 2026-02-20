@@ -2,11 +2,25 @@
     --text: #f5f5f7;
     --textGray: #9fa1a6;
     --blue: #ff2e63;
+    --blue-secondary: #ff4d4d;
     --bgGray: #050505;
     --solid: #262631;
     --white: #111117;
     --surface: #15151f;
     --surface-elevated: #1f1f2b;
     --glow: rgba(255, 46, 99, 0.4);
+    --glow-08: rgba(255, 46, 99, 0.08);
+    --glow-10: rgba(255, 46, 99, 0.1);
+    --glow-12: rgba(255, 46, 99, 0.12);
+    --glow-15: rgba(255, 46, 99, 0.15);
+    --glow-20: rgba(255, 46, 99, 0.2);
+    --glow-25: rgba(255, 46, 99, 0.25);
+    --glow-28: rgba(255, 46, 99, 0.28);
+    --glow-30: rgba(255, 46, 99, 0.3);
+    --glow-35: rgba(255, 46, 99, 0.35);
+    --glow-45: rgba(255, 46, 99, 0.45);
+    --glow-50: rgba(255, 46, 99, 0.5);
+    --glow-60: rgba(255, 46, 99, 0.6);
+    --glow-70: rgba(255, 46, 99, 0.7);
     --muted: #5a5a66;
 }

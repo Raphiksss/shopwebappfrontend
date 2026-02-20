@@ -24,7 +24,7 @@
     padding: 6px 14px;
     border-radius: 8px;
     border: 1px solid var(--blue);
-    background: rgba(255, 46, 99, 0.15);
+    background: var(--glow-15);
     color: var(--blue);
     font-size: 13px;
     cursor: pointer;
@@ -184,7 +184,7 @@
     padding: 5px 12px;
     border-radius: 8px;
     border: 1px solid var(--blue);
-    background: rgba(255, 46, 99, 0.15);
+    background: var(--glow-15);
     color: var(--blue);
     font-size: 12px;
     cursor: default;

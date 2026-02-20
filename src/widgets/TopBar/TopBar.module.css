@@ -12,7 +12,7 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     margin: 8px 0 18px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45),
-        0 0 25px rgba(255, 46, 99, 0.15);
+        0 0 25px var(--glow-15);
 }
 
 .cloudBtn {
@@ -32,8 +32,8 @@
 }
 
 .cloudBtn:hover {
-    background: rgba(255, 46, 99, 0.15);
-    border-color: rgba(255, 46, 99, 0.5);
+    background: var(--glow-15);
+    border-color: var(--glow-50);
     transform: translateY(-1px);
 }
 
@@ -50,8 +50,8 @@
 }
 
 .searchInput:focus {
-    border-color: rgba(255, 46, 99, 0.7);
-    box-shadow: 0 0 0 3px rgba(255, 46, 99, 0.18);
+    border-color: var(--glow-70);
+    box-shadow: 0 0 0 3px var(--glow-20);
     outline: none;
 }
 
@@ -85,7 +85,7 @@ img {
     transition: background 0.14s, color 0.14s;
 }
 .resultItem:hover {
-    background: rgba(255, 46, 99, 0.12);
+    background: var(--glow-12);
     color: #fff;
 }
 

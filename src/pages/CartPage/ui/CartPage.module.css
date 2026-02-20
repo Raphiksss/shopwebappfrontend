@@ -107,7 +107,7 @@
 }
 
 .checkoutButton {
-    background: linear-gradient(120deg, #ff2e63, #ff4d4d);
+    background: linear-gradient(120deg, var(--blue), var(--blue-secondary));
     border: none;
     border-radius: 12px;
     padding: 12px 26px;
@@ -116,12 +116,12 @@
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     color: #fff;
-    box-shadow: 0 15px 30px rgba(255, 46, 99, 0.35);
+    box-shadow: 0 15px 30px var(--glow-35);
 }
 
 .checkoutButton:hover {
     transform: translateY(-1px);
-    box-shadow: 0 20px 35px rgba(255, 46, 99, 0.4);
+    box-shadow: 0 20px 35px var(--glow);
 }
 
 .checkoutButton:disabled {
@@ -132,12 +132,12 @@
 .actionButton {
     margin-top: 15px;
     padding: 12px 24px;
-    background: linear-gradient(120deg, #ff2e63, #ff4d4d);
+    background: linear-gradient(120deg, var(--blue), var(--blue-secondary));
     color: white;
     border: none;
     border-radius: 12px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 500;
-    box-shadow: 0 12px 30px rgba(255, 46, 99, 0.3);
+    box-shadow: 0 12px 30px var(--glow-30);
 }
