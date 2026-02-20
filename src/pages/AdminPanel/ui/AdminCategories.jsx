@@ -3,12 +3,13 @@ import { apiCategories } from "../../../shared/api";
 import { Button } from "../../../shared/assets/Button/Button";
 import styles from "./AdminCategories.module.css";
 
-const CategoryCard = ({ cat, onUpdated }) => {
+const CategoryCard = ({ cat, onUpdated, onDeleted }) => {
     const [editing, setEditing] = useState(false);
     const [title, setTitle] = useState("");
     const [img, setImg] = useState(null);
     const [saving, setSaving] = useState(false);
     const [done, setDone] = useState(false);
+    const [deleting, setDeleting] = useState(false);
 
     const handleEdit = () => {
         setTitle(cat.title || cat.name || "");
@@ -44,6 +45,18 @@ const CategoryCard = ({ cat, onUpdated }) => {
         }
     };
 
+    const handleDelete = async () => {
+        setDeleting(true);
+        try {
+            await apiCategories.delete(cat.id);
+            onDeleted();
+        } catch {
+            // ignore
+        } finally {
+            setDeleting(false);
+        }
+    };
+
     const catTitle = cat.title || cat.name || "—";
     const catImg = cat.img || cat.image || null;
 
@@ -56,6 +69,13 @@ const CategoryCard = ({ cat, onUpdated }) => {
                 <span className={styles.catTitle}>{catTitle}</span>
                 <button className={styles.editBtn} onClick={handleEdit}>
                     ✏️
+                </button>
+                <button
+                    className={styles.deleteBtn}
+                    onClick={handleDelete}
+                    disabled={deleting}
+                >
+                    {deleting ? "..." : "Удалить"}
                 </button>
             </div>
 
@@ -219,6 +239,7 @@ export const AdminCategories = () => {
                             key={cat.id}
                             cat={cat}
                             onUpdated={loadCategories}
+                            onDeleted={loadCategories}
                         />
                     ))}
                 </div>

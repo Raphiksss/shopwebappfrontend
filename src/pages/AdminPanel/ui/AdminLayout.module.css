@@ -26,6 +26,7 @@
     border-radius: 10px;
     display: block;
     background-color: var(--solid);
+    color: var(--text);
 }
 .active {
     text-align: center;

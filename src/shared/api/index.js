@@ -103,6 +103,7 @@ export const apiCategories = {
     list: () => request("/categories/"),
     create: (formData) => request("/categories/", "POST", formData, {}, withCreds),
     update: (id, formData) => request(`/categories/${id}/`, "PATCH", formData, {}, withCreds),
+    delete: (id) => request(`/categories/${id}/`, "DELETE", null, {}, withCreds),
 };
 
 export const apiUsers = {
