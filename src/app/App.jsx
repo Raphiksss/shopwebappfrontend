@@ -10,6 +10,7 @@ import AdminPanel from "../pages/AdminPanel";
 import { AdminCatalog } from "../pages/AdminPanel/ui/AdminCatalog";
 import { AdminOrders } from "../pages/AdminPanel/ui/AdminOrders";
 import { AdminCustomers } from "../pages/AdminPanel/ui/AdminCustomers";
+import { AdminCategories } from "../pages/AdminPanel/ui/AdminCategories";
 import { WebAppWarning } from "../shared/ui/WebAppWarning/WebAppWarning";
 
 import styles from "./App.module.css";
@@ -37,6 +38,7 @@ function App() {
                             />
                             <Route path="orders" element={<AdminOrders />} />
                             <Route path="catalog" element={<AdminCatalog />} />
+                            <Route path="categories" element={<AdminCategories />} />
                             <Route path="customers" element={<AdminCustomers />} />
                         </Route>
                     </Routes>

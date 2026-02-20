@@ -101,6 +101,8 @@ export const apiProducts = {
 
 export const apiCategories = {
     list: () => request("/categories/"),
+    create: (formData) => request("/categories/", "POST", formData, {}, withCreds),
+    update: (id, formData) => request(`/categories/${id}/`, "PATCH", formData, {}, withCreds),
 };
 
 export const apiUsers = {

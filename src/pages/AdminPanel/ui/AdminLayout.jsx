@@ -38,6 +38,14 @@ export const AdminLayout = ({ userStaff }) => {
                     Заказы
                 </NavLink>
                 <NavLink
+                    to="categories"
+                    className={({ isActive }) =>
+                        isActive ? styles.active : styles.link
+                    }
+                >
+                    Категории
+                </NavLink>
+                <NavLink
                     to="customers"
                     className={({ isActive }) =>
                         isActive ? styles.active : styles.link

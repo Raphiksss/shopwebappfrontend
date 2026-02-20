@@ -1,0 +1,207 @@
+.muted {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.addBtnWrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--solid);
+    margin-bottom: 16px;
+}
+
+.formTitle {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 4px;
+}
+
+.input {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--solid);
+    background: var(--surface-elevated);
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+}
+
+.input:focus {
+    border-color: var(--blue);
+}
+
+.label {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.fileSection {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.fileInput {
+    font-size: 13px;
+    color: var(--text);
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.success {
+    color: #4dff7c;
+    font-size: 13px;
+}
+
+.error {
+    color: #ff4d4d;
+    font-size: 13px;
+}
+
+.listSection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card {
+    padding: 12px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--solid);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.catImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.catTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.editBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 4px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.editBtn:hover {
+    opacity: 1;
+}
+
+.editPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--solid);
+}
+
+.editRow {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.editLabel {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.editActions {
+    display: flex;
+    gap: 6px;
+}
+
+.saveBtn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid rgba(77, 255, 124, 0.3);
+    background: rgba(77, 255, 124, 0.1);
+    color: #4dff7c;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.saveBtn:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.cancelBtn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 77, 77, 0.3);
+    background: rgba(255, 77, 77, 0.1);
+    color: #ff4d4d;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cancelBtn:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.spin {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
