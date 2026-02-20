@@ -161,6 +161,12 @@ export const apiPayments = {
         ),
 };
 
+export const apiSettings = {
+    getAccentColor: () => request("/settings/accent_color/"),
+    setAccentColor: (color) =>
+        request("/settings/accent_color/", "POST", { color }, {}, withCreds),
+};
+
 export const apiAuth = {
     login: (username, password) => {
         const formData = new FormData();

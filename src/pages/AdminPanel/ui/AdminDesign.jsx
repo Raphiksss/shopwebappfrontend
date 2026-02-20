@@ -1,5 +1,27 @@
 import { useState } from "react";
+import { apiSettings } from "../../../shared/api";
 import styles from "./AdminDesign.module.css";
+
+const DEFAULT_HEX = "#ff2e63";
+
+const NAMED_COLORS = {
+    red: "#ff2e63",
+    blue: "#3b82f6",
+    purple: "#8b5cf6",
+    green: "#10b981",
+    orange: "#f97316",
+    pink: "#ec4899",
+    cyan: "#06b6d4",
+    yellow: "#eab308",
+};
+
+function normalizeColor(value) {
+    if (!value || typeof value !== "string") return null;
+    const trimmed = value.trim().toLowerCase();
+    if (NAMED_COLORS[trimmed]) return NAMED_COLORS[trimmed];
+    if (/^#[0-9a-f]{6}$/i.test(trimmed)) return trimmed;
+    return null;
+}
 
 function hexToRgb(hex) {
     const r = parseInt(hex.slice(1, 3), 16);
@@ -27,11 +49,9 @@ const COLORS = [
     { name: "Жёлтый", value: "#eab308" },
 ];
 
-const STORAGE_KEY = "app-accent-color";
-
 const OPACITIES = [8, 10, 12, 15, 20, 25, 28, 30, 35, 40, 45, 50, 60, 70];
 
-function applyColor(hex) {
+export function applyAccentColor(hex) {
     const { r, g, b } = hexToRgb(hex);
     const secondary = lighten(hex, 30);
     const root = document.documentElement;
@@ -41,36 +61,47 @@ function applyColor(hex) {
     root.style.setProperty("--glow", `rgba(${r}, ${g}, ${b}, 0.4)`);
 
     for (const op of OPACITIES) {
-        root.style.setProperty(`--glow-${op.toString().padStart(2, "0")}`, `rgba(${r}, ${g}, ${b}, ${op / 100})`);
+        root.style.setProperty(
+            `--glow-${op.toString().padStart(2, "0")}`,
+            `rgba(${r}, ${g}, ${b}, ${op / 100})`
+        );
     }
 }
 
-function getSavedHex() {
+export async function initAccentColor() {
     try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) return saved;
-    } catch {}
-    return null;
-}
-
-export function initAccentColor() {
-    const hex = getSavedHex();
-    if (hex) applyColor(hex);
+        const data = await apiSettings.getAccentColor();
+        const hex = normalizeColor(data?.accent_color);
+        if (hex) applyAccentColor(hex);
+    } catch {
+        // бэк недоступен — оставляем дефолт из CSS
+    }
 }
 
 export const AdminDesign = () => {
-    const [active, setActive] = useState(() => getSavedHex() || COLORS[0].value);
+    const [active, setActive] = useState(COLORS[0].value);
+    const [saving, setSaving] = useState(false);
 
-    const handlePick = (hex) => {
+    const handlePick = async (hex) => {
         setActive(hex);
-        applyColor(hex);
-        localStorage.setItem(STORAGE_KEY, hex);
+        applyAccentColor(hex);
+        setSaving(true);
+        try {
+            await apiSettings.setAccentColor(hex);
+        } catch {
+            // ignore
+        } finally {
+            setSaving(false);
+        }
     };
 
     return (
         <div>
             <h3 className={styles.title}>Акцентный цвет</h3>
-            <p className={styles.desc}>Выберите основной цвет интерфейса</p>
+            <p className={styles.desc}>
+                Выберите основной цвет интерфейса
+                {saving && " — сохранение..."}
+            </p>
 
             <div className={styles.grid}>
                 {COLORS.map((color) => (
@@ -82,6 +113,7 @@ export const AdminDesign = () => {
                                 : styles.colorBtn
                         }
                         onClick={() => handlePick(color.value)}
+                        disabled={saving}
                     >
                         <span
                             className={styles.swatch}
