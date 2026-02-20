@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { apiProducts, apiCategories } from "../../../shared/api";
 import { Button } from "../../../shared/assets/Button/Button";
+import { PencilIcon } from "./PencilIcon";
 import styles from "./AdminCatalog.module.css";
 
 const PRODUCT_TYPES = [
@@ -494,7 +495,7 @@ export const AdminCatalog = () => {
                                         )
                                     }
                                 >
-                                    ✏️
+                                    <PencilIcon size={16} />
                                 </button>
                                 <button
                                     className={styles.deleteBtn}

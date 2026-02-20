@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { apiUsers } from "../../../shared/api";
+import { PencilIcon } from "./PencilIcon";
 import styles from "./AdminCustomers.module.css";
 
 const UserCard = ({ user, onBalanceChanged }) => {
@@ -81,7 +82,7 @@ const UserCard = ({ user, onBalanceChanged }) => {
                         <span className={styles.balanceLabel}>Баланс:</span>
                         <span className={styles.balanceValue}>{user.balance ?? 0} ₽</span>
                         <button className={styles.editBtn} onClick={handleEdit}>
-                            ✏️
+                            <PencilIcon size={14} />
                         </button>
                     </div>
                 )}

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { apiCategories } from "../../../shared/api";
 import { Button } from "../../../shared/assets/Button/Button";
+import { PencilIcon } from "./PencilIcon";
 import styles from "./AdminCategories.module.css";
 
 const CategoryCard = ({ cat, onUpdated, onDeleted }) => {
@@ -68,7 +69,7 @@ const CategoryCard = ({ cat, onUpdated, onDeleted }) => {
                 )}
                 <span className={styles.catTitle}>{catTitle}</span>
                 <button className={styles.editBtn} onClick={handleEdit}>
-                    ✏️
+                    <PencilIcon size={14} />
                 </button>
                 <button
                     className={styles.deleteBtn}
