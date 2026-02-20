@@ -105,6 +105,8 @@ export const apiCategories = {
 
 export const apiUsers = {
     getByTgId: (tgId) => request(`/users/${tgId}/`),
+    list: () => request("/users/", "GET", null, {}, withCreds),
+    update: (userId, body) => request(`/users/${userId}/`, "PATCH", body, {}, withCreds),
     create: (payload) => request("/create_user/", "POST", payload),
     favorites: (userId) => request(`/favorites/${userId}/`),
     favAdd: (userId, prodId) =>

@@ -9,6 +9,7 @@ import { ProductPage } from "../pages/ProductPage";
 import AdminPanel from "../pages/AdminPanel";
 import { AdminCatalog } from "../pages/AdminPanel/ui/AdminCatalog";
 import { AdminOrders } from "../pages/AdminPanel/ui/AdminOrders";
+import { AdminCustomers } from "../pages/AdminPanel/ui/AdminCustomers";
 import { WebAppWarning } from "../shared/ui/WebAppWarning/WebAppWarning";
 
 import styles from "./App.module.css";
@@ -36,7 +37,7 @@ function App() {
                             />
                             <Route path="orders" element={<AdminOrders />} />
                             <Route path="catalog" element={<AdminCatalog />} />
-                            <Route path="customers" element={<Customers />} />
+                            <Route path="customers" element={<AdminCustomers />} />
                         </Route>
                     </Routes>
                 </main>
@@ -49,4 +50,3 @@ function App() {
 }
 
 export default App;
-export const Customers = () => <h2>Список клиентов</h2>;
