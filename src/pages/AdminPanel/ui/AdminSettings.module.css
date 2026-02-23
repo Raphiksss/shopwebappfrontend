@@ -1,0 +1,89 @@
+.muted {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 4px;
+}
+
+.desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 16px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--solid);
+}
+
+.icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.label {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+    flex: 1;
+}
+
+.toggleOn,
+.toggleOff {
+    width: 48px;
+    height: 28px;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+
+.toggleOn {
+    background: var(--blue);
+}
+
+.toggleOff {
+    background: var(--solid);
+}
+
+.toggleOn:disabled,
+.toggleOff:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.toggleThumb {
+    position: absolute;
+    top: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    transition: left 0.2s;
+}
+
+.toggleOn .toggleThumb {
+    left: 23px;
+}
+
+.toggleOff .toggleThumb {
+    left: 3px;
+}

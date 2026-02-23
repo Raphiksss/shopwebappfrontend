@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 import styles from "./profile-payments.module.css";
 import { Button } from "../../../shared/assets/Button/Button";
 import { useUserStore } from "../../../entities/user/model/useUserStore";
 import { useTelegramStore } from "../../../entities/telegram/model/useTelegramStore";
-import { apiPayments } from "../../../shared/api";
+import { apiPayments, apiSettings } from "../../../shared/api";
 
 const formatBalance = (value) => {
     const num = Number(value);
@@ -24,6 +24,15 @@ export const PaymentMethods = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [processingMethod, setProcessingMethod] = useState(null);
     const [paymentUrl, setPaymentUrl] = useState(null);
+    const [enabledMethods, setEnabledMethods] = useState(null);
+
+    useEffect(() => {
+        apiSettings.getPaymentMethods()
+            .then((data) => {
+                if (data) setEnabledMethods(data);
+            })
+            .catch(() => {});
+    }, []);
 
     const balance = useMemo(() => {
         if (loading && !user) return "Загрузка...";
@@ -116,36 +125,42 @@ export const PaymentMethods = () => {
                         </button>
                     </div>
                     <div className={styles.paymentOptions}>
-                        <button
-                            className={styles.paymentOption}
-                            onClick={() => handlePaymentMethodClick('telegram-stars')}
-                            disabled={isProcessing}
-                        >
-                            <span className={styles.optionIcon}>⭐</span>
-                            <span className={styles.optionText}>
-                                {processingMethod === 'telegram-stars' ? "Обработка..." : "Telegram Stars"}
-                            </span>
-                        </button>
-                        <button
-                            className={styles.paymentOption}
-                            onClick={() => handlePaymentMethodClick('crypto')}
-                            disabled={isProcessing}
-                        >
-                            <span className={styles.optionIcon}>₿</span>
-                            <span className={styles.optionText}>
-                                {processingMethod === 'crypto' ? "Обработка..." : "Crypto Bot"}
-                            </span>
-                        </button>
-                        <button
-                            className={styles.paymentOption}
-                            onClick={() => handlePaymentMethodClick('card')}
-                            disabled={isProcessing}
-                        >
-                            <span className={styles.optionIcon}>💳</span>
-                            <span className={styles.optionText}>
-                                {processingMethod === 'card' ? "Обработка..." : "Банковская карта"}
-                            </span>
-                        </button>
+                        {(!enabledMethods || enabledMethods.stars) && (
+                            <button
+                                className={styles.paymentOption}
+                                onClick={() => handlePaymentMethodClick('telegram-stars')}
+                                disabled={isProcessing}
+                            >
+                                <span className={styles.optionIcon}>⭐</span>
+                                <span className={styles.optionText}>
+                                    {processingMethod === 'telegram-stars' ? "Обработка..." : "Telegram Stars"}
+                                </span>
+                            </button>
+                        )}
+                        {(!enabledMethods || enabledMethods.crypto_bot) && (
+                            <button
+                                className={styles.paymentOption}
+                                onClick={() => handlePaymentMethodClick('crypto')}
+                                disabled={isProcessing}
+                            >
+                                <span className={styles.optionIcon}>₿</span>
+                                <span className={styles.optionText}>
+                                    {processingMethod === 'crypto' ? "Обработка..." : "Crypto Bot"}
+                                </span>
+                            </button>
+                        )}
+                        {(!enabledMethods || enabledMethods.yoomoney) && (
+                            <button
+                                className={styles.paymentOption}
+                                onClick={() => handlePaymentMethodClick('card')}
+                                disabled={isProcessing}
+                            >
+                                <span className={styles.optionIcon}>💳</span>
+                                <span className={styles.optionText}>
+                                    {processingMethod === 'card' ? "Обработка..." : "Банковская карта"}
+                                </span>
+                            </button>
+                        )}
                     </div>
                 </div>
             )}

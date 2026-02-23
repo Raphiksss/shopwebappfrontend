@@ -165,6 +165,9 @@ export const apiSettings = {
     getAccentColor: () => request("/settings/accent_color/"),
     setAccentColor: (color) =>
         request("/settings/accent_color/", "POST", { color }, {}, withCreds),
+    getPaymentMethods: () => request("/settings/payment_methods/"),
+    setPaymentMethods: (methods) =>
+        request("/settings/payment_methods/", "POST", methods, {}, withCreds),
 };
 
 export const apiAuth = {
