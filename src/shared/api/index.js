@@ -168,6 +168,14 @@ export const apiSettings = {
     getPaymentMethods: () => request("/settings/payment_methods/"),
     setPaymentMethods: (methods) =>
         request("/settings/payment_methods/", "POST", methods, {}, withCreds),
+    setBotToken: (bot_token) =>
+        request("/settings/bot_token/", "POST", { bot_token }, {}, withCreds),
+    setStarsRate: (exchange_rate) =>
+        request("/settings/stars_exchange_rate/", "POST", { exchange_rate }, {}, withCreds),
+    setCryptoToken: (crypto_bot_token) =>
+        request("/settings/crypto_token/", "POST", { crypto_bot_token }, {}, withCreds),
+    setYooMoney: (data) =>
+        request("/settings/yoo_money/", "POST", data, {}, withCreds),
 };
 
 export const apiAuth = {

@@ -54,20 +54,20 @@ export const AdminLayout = ({ userStaff }) => {
                     Пользователи
                 </NavLink>
                 <NavLink
-                    to="settings"
-                    className={({ isActive }) =>
-                        isActive ? styles.active : styles.link
-                    }
-                >
-                    Настройки
-                </NavLink>
-                <NavLink
                     to="design"
                     className={({ isActive }) =>
                         isActive ? styles.active : styles.link
                     }
                 >
                     Дизайн
+                </NavLink>
+                <NavLink
+                    to="settings"
+                    className={({ isActive }) =>
+                        isActive ? styles.active : styles.link
+                    }
+                >
+                    Общие настройки
                 </NavLink>
             </nav>
 
