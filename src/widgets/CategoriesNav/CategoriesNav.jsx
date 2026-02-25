@@ -11,16 +11,18 @@ const slugify = (value) => {
     const trimmed = value.toString().trim();
     if (!trimmed) return null;
 
+    const hasNonLatin = /[^a-z0-9\s-]/i.test(trimmed);
+
+    if (hasNonLatin) {
+        return encodeURIComponent(trimmed.replace(/\s+/g, "-"));
+    }
+
     const latinSlug = trimmed
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-+|-+$/g, "");
 
-    if (latinSlug) {
-        return latinSlug;
-    }
-
-    return encodeURIComponent(trimmed.replace(/\s+/g, "-"));
+    return latinSlug || encodeURIComponent(trimmed.replace(/\s+/g, "-"));
 };
 
 const CategoryAvatar = ({ title, imageUrl }) => {
