@@ -143,27 +143,26 @@ export const apiUsers = {
     list: () => request("/users/", "GET", null, {}, withCreds),
     update: (userId, body) => request(`/users/${userId}/`, "PATCH", body, {}, withCreds),
     create: (payload) => request("/create_user/", "POST", payload),
-    favorites: (userId) => request(`/favorites/${userId}/`),
-    favAdd: (userId, prodId) =>
-        request(`/favorites/${userId}/?product_id=${prodId}`, "POST"),
-    favDelete: (userId, prodId) =>
-        request(`/favorites/${userId}/?product_id=${prodId}`, "DELETE"),
+    favorites: () => request("/favorites/", "GET", null, {}, withAuth),
+    favAdd: (prodId) =>
+        request(`/favorites/?product_id=${prodId}`, "POST", null, {}, withAuth),
+    favDelete: (prodId) =>
+        request(`/favorites/?product_id=${prodId}`, "DELETE", null, {}, withAuth),
 };
 
 export const apiCart = {
-    get: (tgId) => request(`/cart/${tgId}/`),
-    add: (tgId, prod_id) =>
-        request(`/cart/${tgId}/?prod_id=${prod_id}`, "POST"),
-    deleteItem: (tgId, prod_id) =>
-        request(`/cart/${tgId}/?prod_id=${prod_id}`, "DELETE"),
-    deleteAll: (tgId) => request(`/cart/all_cart/${tgId}/`, "DELETE"),
-    deleteOne: (tgId, prod_id) =>
-        request(`/cart/full_product/${tgId}/?prod_id=${prod_id}`, "DELETE"),
+    get: () => request("/cart/", "GET", null, {}, withAuth),
+    add: (prod_id) =>
+        request(`/cart/?prod_id=${prod_id}`, "POST", null, {}, withAuth),
+    deleteItem: (prod_id) =>
+        request(`/cart/?prod_id=${prod_id}`, "DELETE", null, {}, withAuth),
+    deleteAll: () => request("/cart/all_cart/", "DELETE", null, {}, withAuth),
+    deleteOne: (prod_id) =>
+        request(`/cart/full_product/?prod_id=${prod_id}`, "DELETE", null, {}, withAuth),
 };
 
 export const apiOrders = {
-    create: (tgId) =>
-        request(`/orders/?tg_id=${encodeURIComponent(tgId)}`, "POST"),
+    create: () => request("/orders/", "POST", null, {}, withAuth),
     list: (status, page = 1, limit = 20) => {
         const params = new URLSearchParams();
         if (status) params.set("status", status);
@@ -176,20 +175,20 @@ export const apiOrders = {
 };
 
 export const apiPayments = {
-    replenishStars: (tgId, amount) =>
+    replenishStars: (amount) =>
         request(
-            `/users/replenisment/stars/?tg_id=${encodeURIComponent(tgId)}&amount=${encodeURIComponent(amount)}`,
-            "POST"
+            `/users/replenisment/stars/?amount=${encodeURIComponent(amount)}`,
+            "POST", null, {}, withAuth
         ),
-    replenishCrypto: (tgId, amount) =>
+    replenishCrypto: (amount) =>
         request(
-            `/users/replenisment/crypto/?tg_id=${encodeURIComponent(tgId)}&amount=${encodeURIComponent(amount)}`,
-            "POST"
+            `/users/replenisment/crypto/?amount=${encodeURIComponent(amount)}`,
+            "POST", null, {}, withAuth
         ),
-    replenishYoomoney: (tgId, amount) =>
+    replenishYoomoney: (amount) =>
         request(
-            `/users/replenisment/yoomoney/?tg_id=${encodeURIComponent(tgId)}&amount=${encodeURIComponent(amount)}`,
-            "POST"
+            `/users/replenisment/yoomoney/?amount=${encodeURIComponent(amount)}`,
+            "POST", null, {}, withAuth
         ),
 };
 

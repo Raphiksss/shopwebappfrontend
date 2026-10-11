@@ -11,7 +11,7 @@ import styles from "./profile-favorites.module.css";
 import CrossIcon from "../../../shared/assets/icons/cross.svg?react";
 
 export const FavoritesList = () => {
-    const tgId = useTelegramStore((state) => state.tgId);
+    const initData = useTelegramStore((state) => state.initData);
     const favoriteIds = useFavoriteStore((state) => Array.from(state.ids));
     const removeFavorite = useFavoriteStore((state) => state.removeFavorite);
     const fetchFavorites = useFavoriteStore((state) => state.fetchFavorites);
@@ -21,9 +21,9 @@ export const FavoritesList = () => {
     const goToCatalog = useGoToCatalog();
 
     useEffect(() => {
-        if (!tgId) return;
-        fetchFavorites(tgId);
-    }, [tgId, fetchFavorites]);
+        if (!initData) return;
+        fetchFavorites();
+    }, [initData, fetchFavorites]);
 
     const products = favoriteIds
         .map((id) => getProductById(id))
@@ -64,8 +64,8 @@ export const FavoritesList = () => {
                                 </div>
                                 <button
                                     onClick={() => {
-                                        if (!tgId) return;
-                                        removeFavorite(tgId, product.id);
+                                        if (!initData) return;
+                                        removeFavorite(product.id);
                                     }}
                                     className={styles.button}
                                 >

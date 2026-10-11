@@ -10,12 +10,12 @@ export const useCartStore = create((set, get) => ({
     actionLoading: false,
     error: null,
 
-    //получить корзину ид тг или пустуютак и т
+    //получить корзину пользователя
 
-    fetchCart: async (tgId, isInitial = false) => {
+    fetchCart: async (isInitial = false) => {
         if (isInitial) set({ loading: true, error: null });
         try {
-            const data = await apiCart.get(tgId);
+            const data = await apiCart.get();
             set({ cart: data.products || {} });
         } catch (e) {
             set({ error: e.message });
@@ -27,12 +27,12 @@ export const useCartStore = create((set, get) => ({
     getCart: () => get().cart || {},
 
     // добавить товар в корзину
-    addToCart: async (tg_id, prod_id) => {
+    addToCart: async (prod_id) => {
         set({ actionLoading: true });
         try {
-            await apiCart.add(tg_id, prod_id);
+            await apiCart.add(prod_id);
 
-            await get().fetchCart(tg_id, false);
+            await get().fetchCart(false);
         } catch (e) {
             set({ error: e.message });
 
@@ -42,11 +42,11 @@ export const useCartStore = create((set, get) => ({
     },
     // удалить товар из корзины
 
-    removeFromCartOneCurrent: async (tg_id, prod_id) => {
+    removeFromCartOneCurrent: async (prod_id) => {
         set({ actionLoading: true });
         try {
-            await apiCart.deleteItem(tg_id, prod_id);
-            await get().fetchCart(tg_id, false);
+            await apiCart.deleteItem(prod_id);
+            await get().fetchCart(false);
         } catch (e) {
             set({ error: e.message });
         } finally {
@@ -54,11 +54,11 @@ export const useCartStore = create((set, get) => ({
         }
     },
 
-    removeFromCart: async (tg_id, prod_id) => {
+    removeFromCart: async (prod_id) => {
         set({ actionLoading: true });
         try {
-            await apiCart.deleteOne(tg_id, prod_id);
-            await get().fetchCart(tg_id, false);
+            await apiCart.deleteOne(prod_id);
+            await get().fetchCart(false);
         } catch (e) {
             set({ error: e.message });
         } finally {

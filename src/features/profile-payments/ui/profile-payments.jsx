@@ -13,7 +13,7 @@ const formatBalance = (value) => {
 };
 
 export const PaymentMethods = () => {
-    const tgId = useTelegramStore((state) => state.tgId);
+    const initData = useTelegramStore((state) => state.initData);
     const closeApp = useTelegramStore((state) => state.closeApp);
     const { data: user, loading } = useUserStore((state) => ({
         data: state.data,
@@ -57,7 +57,7 @@ export const PaymentMethods = () => {
                 return;
             }
 
-            if (!tgId) {
+            if (!initData) {
                 alert("Не удалось получить ваш Telegram ID");
                 return;
             }
@@ -66,13 +66,13 @@ export const PaymentMethods = () => {
             setProcessingMethod(method);
             try {
                 if (method === "telegram-stars") {
-                    await apiPayments.replenishStars(tgId, amount);
+                    await apiPayments.replenishStars(amount);
                     closeApp();
                 } else if (method === "crypto") {
-                    await apiPayments.replenishCrypto(tgId, amount);
+                    await apiPayments.replenishCrypto(amount);
                     closeApp();
                 } else if (method === "card") {
-                    const response = await apiPayments.replenishYoomoney(tgId, amount);
+                    const response = await apiPayments.replenishYoomoney(amount);
                     if (response?.payment_url) {
                         setPaymentUrl(response.payment_url);
                         setShowPaymentPanel(false);
@@ -106,9 +106,9 @@ export const PaymentMethods = () => {
                     placeholder="Введите сумму..."
                     value={amount}
                     onChange={handleAmountChange}
-                    disabled={!tgId || isProcessing}
+                    disabled={!initData || isProcessing}
                 />
-                <Button size="medium" disabled={!tgId || isProcessing} onClick={handleTopUpClick}>
+                <Button size="medium" disabled={!initData || isProcessing} onClick={handleTopUpClick}>
                     Пополнить
                 </Button>
             </div>

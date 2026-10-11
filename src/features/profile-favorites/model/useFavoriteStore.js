@@ -21,10 +21,10 @@ export const useFavoriteStore = create((set, get) => ({
     error: null,
 
     // загрузить избранное пользователя
-    fetchFavorites: async (tgId, isInitial = false) => {
+    fetchFavorites: async (isInitial = false) => {
         if (isInitial) set({ loading: true, error: null });
         try {
-            const data = await apiUsers.favorites(toNum(tgId));
+            const data = await apiUsers.favorites();
             const arr = normalizeIds(data);
             set({ ids: new Set(arr) });
         } catch (e) {
@@ -41,13 +41,13 @@ export const useFavoriteStore = create((set, get) => ({
     },
 
     // добавить (оптимистично)
-    addFavorite: async (tgId, prodId) => {
+    addFavorite: async (prodId) => {
         const id = toNum(prodId);
         const next = new Set(get().ids);
         next.add(id);
         set({ ids: next, actionLoading: true, error: null });
         try {
-            await apiUsers.favAdd(toNum(tgId), id);
+            await apiUsers.favAdd(id);
         } catch (e) {
             // откат
             const rollback = new Set(get().ids);
@@ -63,14 +63,14 @@ export const useFavoriteStore = create((set, get) => ({
     },
 
     // удалить
-    removeFavorite: async (tgId, prodId) => {
+    removeFavorite: async (prodId) => {
         const id = toNum(prodId);
         const next = new Set(get().ids);
         const had = next.delete(id);
         set({ ids: next, actionLoading: true, error: null });
         try {
             // ВАЖНО: бек возвращает 204 БЕЗ тела — в apiUsers просто проверяй res.ok
-            await apiUsers.favDelete(toNum(tgId), id);
+            await apiUsers.favDelete(id);
         } catch (e) {
             // откат
             if (had) {
@@ -86,11 +86,11 @@ export const useFavoriteStore = create((set, get) => ({
     },
 
     // переключить
-    toggleFavorite: async (tgId, prodId) => {
+    toggleFavorite: async (prodId) => {
         const id = toNum(prodId);
         return get().isFavorite(id)
-            ? get().removeFavorite(tgId, id)
-            : get().addFavorite(tgId, id);
+            ? get().removeFavorite(id)
+            : get().addFavorite(id);
     },
 
     // список id (массив)

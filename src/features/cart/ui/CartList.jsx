@@ -11,7 +11,7 @@ import CrossIcon from "../../../shared/assets/icons/cross.svg?react";
 import styles from "./CartList.module.css";
 
 export const CartList = () => {
-    const tgId = useTelegramStore((state) => state.tgId);
+    const initData = useTelegramStore((state) => state.initData);
 
     const { fetchCart, loading, cart, removeFromCart, current } =
         useCartStore();
@@ -23,9 +23,9 @@ export const CartList = () => {
     }, [loadProducts]);
 
     useEffect(() => {
-        if (!tgId) return;
-        fetchCart(tgId, false);
-    }, [fetchCart, tgId]);
+        if (!initData) return;
+        fetchCart(false);
+    }, [fetchCart, initData]);
 
     const getProductById = useProductsStore((state) => state.getProductById);
 
@@ -73,8 +73,8 @@ export const CartList = () => {
                             <FavoriteButton product={product} />
                             <button
                                 onClick={() => {
-                                    if (!tgId) return;
-                                    removeFromCart(tgId, product.id);
+                                    if (!initData) return;
+                                    removeFromCart(product.id);
                                 }}
                                 className={styles.button}
                             >

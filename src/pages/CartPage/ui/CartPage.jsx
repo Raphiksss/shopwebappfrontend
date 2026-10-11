@@ -23,7 +23,6 @@ export const CartPage = () => {
     );
     const payableAmount = sum;
 
-    const tgId = useTelegramStore((state) => state.tgId);
     const initData = useTelegramStore((state) => state.initData);
     const { data: user, loadUser } = useUserStore((state) => ({
         data: state.data,
@@ -39,7 +38,7 @@ export const CartPage = () => {
     }, [initData, loadUser]);
 
     const handleCheckout = async () => {
-        if (!tgId) {
+        if (!initData) {
             showToast("Не удалось определить пользователя Telegram.");
             return;
         }
@@ -61,7 +60,7 @@ export const CartPage = () => {
 
         try {
             setIsOrdering(true);
-            await apiOrders.create(tgId);
+            await apiOrders.create();
             showToast("Заказ успешно оформлен!");
             closeTelegramApp?.();
         } catch (error) {

@@ -9,7 +9,7 @@ export const CartControls = ({
     size,
     text = "Добавить в корзину",
 }) => {
-    const tgId = useTelegramStore((state) => state.tgId);
+    const initData = useTelegramStore((state) => state.initData);
     const { addToCart, removeFromCartOneCurrent, actionLoading, cart } =
         useCartStore();
     const { showToast } = useToastStore();
@@ -17,23 +17,23 @@ export const CartControls = ({
     if (!product) return null;
 
     const count = product ? cart[product.id] || 0 : 0;
-    const controlsDisabled = actionLoading || !tgId;
+    const controlsDisabled = actionLoading || !initData;
 
     const handleAdd = () => {
-        if (!tgId) return;
-        addToCart(tgId, product.id);
+        if (!initData) return;
+        addToCart(product.id);
     };
 
     const handlePrimaryAdd = () => {
         handleAdd();
-        if (tgId) {
+        if (initData) {
             showToast("Товар добавлен в корзину!");
         }
     };
 
     const handleRemove = () => {
-        if (!tgId) return;
-        removeFromCartOneCurrent(tgId, product.id);
+        if (!initData) return;
+        removeFromCartOneCurrent(product.id);
     };
 
     return count === 0 ? (

@@ -7,7 +7,7 @@ import HeartIcon from "../../assets/icons/heart.svg?react";
 import styles from "./FavoriteButton.module.css";
 
 export const FavoriteButton = ({ product, size = "medium" }) => {
-    const tgId = useTelegramStore((state) => state.tgId);
+    const initData = useTelegramStore((state) => state.initData);
     const isFavorite = useFavoriteStore((state) =>
         product ? state.isFavorite(product.id) : false
     );
@@ -19,8 +19,8 @@ export const FavoriteButton = ({ product, size = "medium" }) => {
     const handleClick = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        if (!tgId) return;
-        toggleFavorite(tgId, product.id);
+        if (!initData) return;
+        toggleFavorite(product.id);
     };
 
     return (
@@ -28,7 +28,7 @@ export const FavoriteButton = ({ product, size = "medium" }) => {
             onClick={handleClick}
             className={styles.button}
             title={isFavorite ? "Remove from favorites" : "Add to favorites"}
-            disabled={actionLoading || !tgId}
+            disabled={actionLoading || !initData}
         >
             <HeartIcon
                 className={clsx(styles.icon, styles[size], {
