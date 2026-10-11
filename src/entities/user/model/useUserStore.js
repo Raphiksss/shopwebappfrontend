@@ -2,33 +2,18 @@ import { create } from "zustand";
 
 import { apiUsers } from "../../../shared/api";
 
-const normalizeId = (value) => {
-    const num = Number(value);
-    return Number.isFinite(num) ? num : null;
-};
-
 export const useUserStore = create((set, get) => ({
     data: null,
     loading: false,
     error: null,
 
-    loadUser: async (tgId, { force = false } = {}) => {
-        const normalizedId = normalizeId(tgId);
-        if (!normalizedId) return;
-
+    loadUser: async ({ force = false } = {}) => {
         const { loading, data } = get();
-        if (
-            !force &&
-            (loading ||
-                normalizeId(data?.tg_id || data?.telegram_id || data?.id) ===
-                    normalizedId)
-        ) {
-            return;
-        }
+        if (!force && (loading || data)) return;
 
         set({ loading: true, error: null });
         try {
-            const response = await apiUsers.getByTgId(normalizedId);
+            const response = await apiUsers.me();
             set({ data: response, loading: false, error: null });
         } catch (error) {
             set({

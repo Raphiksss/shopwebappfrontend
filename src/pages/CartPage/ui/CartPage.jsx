@@ -24,6 +24,7 @@ export const CartPage = () => {
     const payableAmount = sum;
 
     const tgId = useTelegramStore((state) => state.tgId);
+    const initData = useTelegramStore((state) => state.initData);
     const { data: user, loadUser } = useUserStore((state) => ({
         data: state.data,
         loadUser: state.loadUser,
@@ -32,10 +33,10 @@ export const CartPage = () => {
     const { showToast } = useToastStore();
 
     useEffect(() => {
-        if (tgId) {
-            loadUser(tgId);
+        if (initData) {
+            loadUser();
         }
-    }, [tgId, loadUser]);
+    }, [initData, loadUser]);
 
     const handleCheckout = async () => {
         if (!tgId) {

@@ -34,6 +34,7 @@ const initialTgId = getQueryTgId() ?? devFallbackTgId ?? null;
 export const useTelegramStore = create((set, get) => ({
     webApp: null,
     user: null,
+    initData: null,
     tgId: initialTgId,
     isReady: false,
     error: null,
@@ -61,6 +62,7 @@ export const useTelegramStore = create((set, get) => ({
             set({
                 webApp,
                 user,
+                initData: webApp?.initData || null,
                 tgId: tgId ?? queryTgId ?? devFallbackTgId ?? null,
                 isReady: true,
                 error: null,

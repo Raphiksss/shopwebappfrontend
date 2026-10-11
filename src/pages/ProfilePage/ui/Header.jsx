@@ -14,6 +14,7 @@ const formatBalance = (balance) => {
 
 export const ProfileHeader = () => {
     const tgId = useTelegramStore((state) => state.tgId);
+    const initData = useTelegramStore((state) => state.initData);
     const { data: user, loading, error, loadUser } = useUserStore((state) => ({
         data: state.data,
         loading: state.loading,
@@ -22,9 +23,9 @@ export const ProfileHeader = () => {
     }));
 
     useEffect(() => {
-        if (!tgId) return;
-        loadUser(tgId);
-    }, [tgId, loadUser]);
+        if (!initData) return;
+        loadUser();
+    }, [initData, loadUser]);
 
     const displayName = useMemo(() => {
         if (loading) return "Загрузка...";

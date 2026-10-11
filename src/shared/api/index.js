@@ -45,11 +45,41 @@ function buildPath(path) {
 }
 
 
-export async function request(path, method = "GET", body = null, headers = {}, { credentials } = {}) {
+let accessTokenPromise = null;
+
+function getAccessToken() {
+    if (!accessTokenPromise) {
+        const initData =
+            typeof window === "undefined"
+                ? null
+                : window.Telegram?.WebApp?.initData;
+
+        if (!initData) {
+            return Promise.reject(new Error("No Telegram init data"));
+        }
+
+        accessTokenPromise = request("/users/login/", "POST", {
+            init_data: initData,
+        })
+            .then((data) => data.access_token)
+            .catch((error) => {
+                accessTokenPromise = null;
+                throw error;
+            });
+    }
+
+    return accessTokenPromise;
+}
+
+export async function request(path, method = "GET", body = null, headers = {}, { credentials, auth } = {}) {
     const opts = { method, headers };
 
     if (credentials) {
         opts.credentials = credentials;
+    }
+
+    if (auth) {
+        opts.headers.Authorization = `Bearer ${await getAccessToken()}`;
     }
 
     if (body && !(body instanceof FormData)) {
@@ -79,6 +109,7 @@ export async function request(path, method = "GET", body = null, headers = {}, {
 }
 
 const withCreds = { credentials: "include" };
+const withAuth = { auth: true };
 
 export const apiProducts = {
     list: (params) => {
@@ -107,7 +138,8 @@ export const apiCategories = {
 };
 
 export const apiUsers = {
-    getByTgId: (tgId) => request(`/users/${tgId}/`),
+    login: () => getAccessToken(),
+    me: () => request("/users/me/", "GET", null, {}, withAuth),
     list: () => request("/users/", "GET", null, {}, withCreds),
     update: (userId, body) => request(`/users/${userId}/`, "PATCH", body, {}, withCreds),
     create: (payload) => request("/create_user/", "POST", payload),

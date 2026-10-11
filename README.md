@@ -42,3 +42,5 @@ VITE_DEV_TG_ID=1
 
 На проде`tg_id` автоматически берётся из `window.Telegram.WebApp.initDataUnsafe.user.id`.
 
+Данные пользователя (профиль, баланс) загружаются через `/users/me/` по токену, который бек выдаёт на `/users/login/` в обмен на `initData`. Вне Telegram `initData` нет, поэтому с `VITE_DEV_TG_ID` профиль и баланс не загрузятся.
+
